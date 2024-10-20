@@ -1,12 +1,13 @@
-import React from 'react'
-import styles from './Header.module.scss'
+import React from "react";
+import { Link } from "react-router-dom";
+import styles from "./Header.module.scss";
 
 export const Header = () => {
 	return (
 		<div className={styles.header}>
-			<div className={styles.logo}>
+			<Link to='/' className={styles.logo}>
 				<h1>GLANCE</h1>
-			</div>
+			</Link>
 			<div className={styles.search}>
 				<img src='icon_search.png' alt='search' />
 				<input type='text' placeholder='Пошук' />
@@ -26,5 +27,5 @@ export const Header = () => {
 				</div>
 			</div>
 		</div>
-	)
-}
+	);
+};

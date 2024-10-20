@@ -9,6 +9,10 @@ export class TelephoneService {
 		return await TelephoneModel.find();
 	}
 
+	async getOne(id) {
+		return await TelephoneModel.findById(id);
+	}
+
 	async createItem(dto, pictureUrl) {
 		try {
 			const doc = new TelephoneModel({

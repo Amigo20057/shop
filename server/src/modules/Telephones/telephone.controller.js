@@ -16,6 +16,17 @@ route.get("/", async (req, res) => {
 	}
 });
 
+route.get("/:id", async (req, res) => {
+	try {
+		const id = req.params.id;
+		const telephone = await telephoneService.getOne(id);
+		res.status(200).json(telephone);
+	} catch (err) {
+		console.log(err);
+		res.status(500).json({ message: "Error get telephone" });
+	}
+});
+
 route.post(
 	"/create",
 	AuthCheck,
