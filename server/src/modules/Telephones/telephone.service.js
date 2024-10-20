@@ -16,12 +16,12 @@ export class TelephoneService {
 				price: dto.price,
 				amount: dto.amount,
 				characteristics: {
-					screen: dto.characteristics.screen,
-					cores: dto.characteristics.cores,
-					power: dto.characteristics.power,
-					ram: dto.characteristics.ram,
-					rom: dto.characteristics.rom,
-					camera: dto.characteristics.camera,
+					screen: dto.screen,
+					cores: dto.cores,
+					power: dto.power,
+					ram: dto.ram,
+					rom: dto.rom,
+					camera: dto.camera,
 				},
 				picture: pictureUrl,
 			});

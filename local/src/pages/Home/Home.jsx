@@ -1,5 +1,6 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { AiFillHeart, AiOutlineHeart } from "react-icons/ai";
+import { getAllTelephones } from "../../Api/Telephones/TelephoneApi";
 import {
 	banner,
 	musicColumn,
@@ -11,6 +12,7 @@ import {
 	tv,
 } from "./assets";
 import styles from "./Home.module.scss";
+
 const telephonesTest = [
 	{
 		path: testTelephone,
@@ -52,11 +54,25 @@ const telephonesTest = [
 export const Home = () => {
 	const [basket, setBasket] = useState([]);
 	const [isFilled, setIsFilled] = useState(false);
+	const [telephones, setTelephones] = useState([]);
+
+	console.log(telephones);
+
+	useEffect(() => {
+		const fetchTelephones = async () => {
+			const data = await getAllTelephones();
+			setTelephones(data);
+		};
+		fetchTelephones();
+	}, []);
 
 	const renderProduct = () => {
-		return telephonesTest.map((telephone, index) => (
+		return telephones.map((telephone, index) => (
 			<div className={styles.telephone} key={index}>
-				<img src={telephone.path} alt={telephone.name} />
+				<img
+					src={`http://localhost:4444/telephones/${telephone.picture}`}
+					alt={telephone.name}
+				/>
 				<p className={styles.name}>{telephone.name}</p>
 				<p className={styles.price}>{telephone.price}</p>
 				<div>

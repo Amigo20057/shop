@@ -22,11 +22,11 @@ route.post(
 	uploadTelephonesPictures.single("picture"),
 	async (req, res) => {
 		try {
-			if (!res.file) {
+			if (!req.file) {
 				return res.status(400).json({ message: "No file uploaded" });
 			}
 
-			pictureUrl = `./pictures/${req.file.filename}`;
+			const pictureUrl = `./pictures/${req.file.filename}`;
 			const telephone = await telephoneService.createItem(req.body, pictureUrl);
 			res.status(200).json(telephone);
 		} catch (err) {

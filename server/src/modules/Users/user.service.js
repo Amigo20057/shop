@@ -83,7 +83,19 @@ export class UserService {
 
 	async getMe(userId) {
 		try {
-			return await UserModel.findById(userId);
+			const user = await UserModel.findById(userId);
+
+			const token = jwt.sign(
+				{
+					_id: user._id,
+				},
+				"secret123",
+				{
+					expiresIn: "30d",
+				}
+			);
+
+			return { ...user._doc, token };
 		} catch (err) {
 			console.log(err);
 			throw new Error("Error get user data: " + err.message);
