@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { useProductStore } from "../../Api/store/store"; // Импортируем useProductStore
+import { useProductStore } from "../../Api/store/store";
 import { getOneTelephones } from "../../Api/Telephones/TelephoneApi";
 import styles from "./FullProduct.module.scss";
 

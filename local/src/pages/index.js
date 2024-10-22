@@ -1,3 +1,4 @@
-import { Home } from './Home/Home'
+import { FullProduct } from "./FullProduct/FullProduct";
+import { Home } from "./Home/Home";
 
-export { Home }
+export { FullProduct, Home };
