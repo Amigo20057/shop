@@ -5,13 +5,42 @@ export const useProductStore = create(
 	persist(
 		set => ({
 			products: [],
-			count: 0,
 			addToBasket: product =>
-				set(state => ({ products: [...state.products, product] })),
-			removeFromBasket: productId =>
-				set(state => ({
-					products: state.products.filter(p => p.id !== productId),
-				})),
+				set(state => {
+					const existingProductIndex = state.products.findIndex(
+						p => p.id === product.id
+					);
+
+					if (existingProductIndex !== -1) {
+						const updatedProducts = [...state.products];
+						updatedProducts[existingProductIndex].count += 1;
+						return { products: updatedProducts };
+					} else {
+						return { products: [...state.products, { ...product, count: 1 }] };
+					}
+				}),
+			// removeFromBasket: productId =>
+			// 	set(state => {
+			// 		return {
+			// 			products: state.products.filter(p => p.id !== productId),
+			// 		};
+			// 	}),
+			decreaseCount: productId =>
+				set(state => {
+					const productIndex = state.products.findIndex(
+						p => p.id === productId
+					);
+					if (productIndex !== -1) {
+						const updatedProducts = [...state.products];
+						if (updatedProducts[productIndex].count > 1) {
+							updatedProducts[productIndex].count -= 1;
+						} else {
+							updatedProducts.splice(productIndex, 1);
+						}
+						return { products: updatedProducts };
+					}
+					return state;
+				}),
 		}),
 		{ name: "product-storage" }
 	)

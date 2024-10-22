@@ -58,6 +58,13 @@ export const Home = () => {
 	const [isFilled, setIsFilled] = useState(false);
 	const [telephones, setTelephones] = useState([]);
 
+	const formatPrice = new Intl.NumberFormat("uk-UA", {
+		style: "currency",
+		currency: "UAH",
+		minimumFractionDigits: 0,
+		maximumFractionDigits: 0,
+	}).format;
+
 	const navigate = useNavigate();
 	console.log(telephones);
 
@@ -82,7 +89,7 @@ export const Home = () => {
 					alt={telephone.name}
 				/>
 				<p className={styles.name}>{telephone.name}</p>
-				<p className={styles.price}>{telephone.price}</p>
+				<p className={styles.price}>{formatPrice(telephone.price)}</p>
 				<div>
 					{telephone.amount > 0 ? (
 						<p>в наявності</p>
