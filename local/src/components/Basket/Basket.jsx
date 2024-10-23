@@ -18,11 +18,11 @@ export const Basket = ({ isOpenBasket }) => {
 	};
 
 	const renderProducts = () => {
-		return products.map((product, index) => (
+		return products.map(product => (
 			<div
 				className={styles.product}
-				key={index}
-				onClick={() => handleRemoveFromBasket(product.id)}
+				key={product._id}
+				onClick={() => handleRemoveFromBasket(product._id)}
 			>
 				<div className={styles.img}>
 					<img
@@ -35,7 +35,7 @@ export const Basket = ({ isOpenBasket }) => {
 				</div>
 				<div className={styles.productPrice}>
 					<h3>{formatPrice(product.price)}</h3>
-					<h3>Кількість: {product.count}</h3>{" "}
+					<h3>Кількість: {product.count}</h3>
 				</div>
 			</div>
 		));

@@ -8,7 +8,7 @@ export const useProductStore = create(
 			addToBasket: product =>
 				set(state => {
 					const existingProductIndex = state.products.findIndex(
-						p => p.id === product.id
+						p => p._id === product._id
 					);
 
 					if (existingProductIndex !== -1) {
@@ -19,16 +19,10 @@ export const useProductStore = create(
 						return { products: [...state.products, { ...product, count: 1 }] };
 					}
 				}),
-			// removeFromBasket: productId =>
-			// 	set(state => {
-			// 		return {
-			// 			products: state.products.filter(p => p.id !== productId),
-			// 		};
-			// 	}),
 			decreaseCount: productId =>
 				set(state => {
 					const productIndex = state.products.findIndex(
-						p => p.id === productId
+						p => p._id === productId
 					);
 					if (productIndex !== -1) {
 						const updatedProducts = [...state.products];

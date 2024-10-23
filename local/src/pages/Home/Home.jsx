@@ -88,37 +88,37 @@ export const Home = () => {
 					<h2>ЗНИЖКА 30%</h2>
 					<h3>при покупці другого товару</h3>
 				</div>
-				<img src={banner} alt='banner' />
+				<img src={banner} alt="banner" />
 			</div>
 			<div className={styles.catalog}>
 				<h1>Каталог</h1>
 				<div onClick={() => navigate("/product/telephone")}>
-					<img src={telephone} alt='telephone' />
+					<img src={telephone} alt="telephone" />
 					<h2>Смартфони</h2>
 				</div>
 				<div>
-					<img src={notebook} alt='notebook' />
+					<img src={notebook} alt="notebook" />
 					<h2>Ноутбуки</h2>
 				</div>
 				<div>
-					<img src={pc} alt='computer' />
+					<img src={pc} alt="computer" />
 					<h2>Комп'ютери</h2>
 				</div>
 				<div>
-					<img src={tv} alt='tv' />
+					<img src={tv} alt="tv" />
 					<h2>Телевізори</h2>
 				</div>
 				<div>
-					<img src={tablet} alt='tablet' />
+					<img src={tablet} alt="tablet" />
 					<h2>Планшети</h2>
 				</div>
 				<div>
-					<img src={musicColumn} alt='music column' />
+					<img src={musicColumn} alt="music column" />
 					<h2>Колонки</h2>
 				</div>
 			</div>
 			<div className={styles.products}>
-				<h1>Популярні товари</h1>
+				<h1>Популярні Смартфони</h1>
 				{renderTelephones()}
 			</div>
 		</div>

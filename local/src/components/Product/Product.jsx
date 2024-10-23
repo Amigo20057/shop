@@ -29,8 +29,8 @@ export const Product = ({ _id, picture, name, price, amount, product }) => {
 		}
 	};
 
-	const handleAddToBasket = product => {
-		addToBasket(product);
+	const handleAddToBasket = () => {
+		addToBasket({ _id, picture, name, price });
 	};
 
 	return (
@@ -50,9 +50,9 @@ export const Product = ({ _id, picture, name, price, amount, product }) => {
 				)}
 				<div className={styles.like} onClick={addToFavorite}>
 					{isFilled ? (
-						<AiFillHeart className={styles.svg} size={24} color='red' />
+						<AiFillHeart className={styles.svg} size={24} color="red" />
 					) : (
-						<AiOutlineHeart className={styles.svg} size={24} color='red' />
+						<AiOutlineHeart className={styles.svg} size={24} color="red" />
 					)}
 				</div>
 			</div>

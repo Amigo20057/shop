@@ -28,5 +28,10 @@ export const Telephones = () => {
 		));
 	};
 
-	return <div className={styles.Telephones}>{renderTelephones()}</div>;
+	return (
+		<div className={styles.Products}>
+			<h1>Смартфони</h1>
+			<div className={styles.product}>{renderTelephones()}</div>
+		</div>
+	);
 };
