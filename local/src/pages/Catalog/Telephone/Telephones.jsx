@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
-import { getAllTelephones } from "../../../../Api/Telephones/TelephoneApi";
-import { Product } from "../../../../components/Product/Product";
+import { getAllTelephones } from "../../../Api/Telephones/TelephoneApi";
+import { Product } from "../../../components/Product/Product";
 import styles from "./Telephones.module.scss";
 
 export const Telephones = () => {
