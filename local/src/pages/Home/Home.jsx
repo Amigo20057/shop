@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
-import { AiFillHeart, AiOutlineHeart } from "react-icons/ai";
 import { useNavigate } from "react-router-dom";
 import { getAllTelephones } from "../../Api/Telephones/TelephoneApi";
+import { Product } from "../../components/Product/Product";
 import {
 	banner,
 	musicColumn,
@@ -9,61 +9,51 @@ import {
 	pc,
 	tablet,
 	telephone,
-	testTelephone,
 	tv,
 } from "./assets";
 import styles from "./Home.module.scss";
 
-const telephonesTest = [
-	{
-		path: testTelephone,
-		name: "Смартфон Apple iPhone 14",
-		price: "52 999грн",
-		amount: 3,
-	},
-	{
-		path: testTelephone,
-		name: "Смартфон Apple iPhone 14",
-		price: "52 999грн",
-		amount: 3,
-	},
-	{
-		path: testTelephone,
-		name: "Смартфон Apple iPhone 14",
-		price: "52 999грн",
-		amount: 3,
-	},
-	{
-		path: testTelephone,
-		name: "Смартфон Apple iPhone 14",
-		price: "52 999грн",
-		amount: 3,
-	},
-	{
-		path: testTelephone,
-		name: "Смартфон Apple iPhone 14",
-		price: "52 999грн",
-		amount: 3,
-	},
-	{
-		path: testTelephone,
-		name: "Смартфон Apple iPhone 14",
-		price: "52 999грн",
-		amount: 0,
-	},
-];
+// const telephonesTest = [
+// 	{
+// 		path: testTelephone,
+// 		name: "Смартфон Apple iPhone 14",
+// 		price: "52 999грн",
+// 		amount: 3,
+// 	},
+// 	{
+// 		path: testTelephone,
+// 		name: "Смартфон Apple iPhone 14",
+// 		price: "52 999грн",
+// 		amount: 3,
+// 	},
+// 	{
+// 		path: testTelephone,
+// 		name: "Смартфон Apple iPhone 14",
+// 		price: "52 999грн",
+// 		amount: 3,
+// 	},
+// 	{
+// 		path: testTelephone,
+// 		name: "Смартфон Apple iPhone 14",
+// 		price: "52 999грн",
+// 		amount: 3,
+// 	},
+// 	{
+// 		path: testTelephone,
+// 		name: "Смартфон Apple iPhone 14",
+// 		price: "52 999грн",
+// 		amount: 3,
+// 	},
+// 	{
+// 		path: testTelephone,
+// 		name: "Смартфон Apple iPhone 14",
+// 		price: "52 999грн",
+// 		amount: 0,
+// 	},
+// ];
 
 export const Home = () => {
-	const [basket, setBasket] = useState([]);
-	const [isFilled, setIsFilled] = useState(false);
 	const [telephones, setTelephones] = useState([]);
-
-	const formatPrice = new Intl.NumberFormat("uk-UA", {
-		style: "currency",
-		currency: "UAH",
-		minimumFractionDigits: 0,
-		maximumFractionDigits: 0,
-	}).format;
 
 	const navigate = useNavigate();
 	console.log(telephones);
@@ -76,64 +66,19 @@ export const Home = () => {
 		fetchTelephones();
 	}, []);
 
-	const navigateToProduct = id => {
-		navigate(`/product/telephone/${id}`);
-	};
-
-	const renderProducts = () => {
+	const renderTelephones = () => {
 		return telephones.map((telephone, index) => (
-			<div className={styles.telephone} key={index}>
-				<img
-					onClick={() => navigateToProduct(telephone._id)}
-					src={`http://localhost:4444/telephones/${telephone.picture}`}
-					alt={telephone.name}
-				/>
-				<p className={styles.name}>{telephone.name}</p>
-				<p className={styles.price}>{formatPrice(telephone.price)}</p>
-				<div>
-					{telephone.amount > 0 ? (
-						<p>в наявності</p>
-					) : (
-						<p style={{ color: "red" }}>немає в наявності</p>
-					)}
-					<div className={styles.like} onClick={addToFavorite}>
-						{isFilled ? (
-							<AiFillHeart className={styles.svg} size={24} color="red" />
-						) : (
-							<AiOutlineHeart className={styles.svg} size={24} color="red" />
-						)}
-					</div>
-				</div>
-				<button onClick={() => addToBasket(telephone)}>У кошик</button>
-			</div>
+			<Product
+				key={index}
+				_id={telephone._id}
+				picture={telephone.picture}
+				name={telephone.name}
+				price={telephone.price}
+				amount={telephone.amount}
+				product={telephone}
+			/>
 		));
 	};
-
-	const addToBasket = product => {
-		const existingProduct = basket.find(item => item.name === product.name);
-
-		if (existingProduct) {
-			setBasket(prevBasket =>
-				prevBasket.map(item =>
-					item.name === product.name
-						? { ...item, quantity: item.quantity + 1 }
-						: item
-				)
-			);
-		} else {
-			setBasket(prevBasket => [...prevBasket, { ...product, quantity: 1 }]);
-		}
-	};
-
-	const addToFavorite = async () => {
-		if (isFilled) {
-			setIsFilled(false);
-		} else {
-			setIsFilled(true);
-		}
-	};
-
-	console.log(basket);
 
 	return (
 		<div className={styles.home}>
@@ -143,38 +88,38 @@ export const Home = () => {
 					<h2>ЗНИЖКА 30%</h2>
 					<h3>при покупці другого товару</h3>
 				</div>
-				<img src={banner} alt="banner" />
+				<img src={banner} alt='banner' />
 			</div>
 			<div className={styles.catalog}>
 				<h1>Каталог</h1>
-				<div>
-					<img src={telephone} alt="telephone" />
+				<div onClick={() => navigate("/product/telephone")}>
+					<img src={telephone} alt='telephone' />
 					<h2>Смартфони</h2>
 				</div>
 				<div>
-					<img src={notebook} alt="notebook" />
+					<img src={notebook} alt='notebook' />
 					<h2>Ноутбуки</h2>
 				</div>
 				<div>
-					<img src={pc} alt="computer" />
+					<img src={pc} alt='computer' />
 					<h2>Комп'ютери</h2>
 				</div>
 				<div>
-					<img src={tv} alt="tv" />
+					<img src={tv} alt='tv' />
 					<h2>Телевізори</h2>
 				</div>
 				<div>
-					<img src={tablet} alt="tablet" />
+					<img src={tablet} alt='tablet' />
 					<h2>Планшети</h2>
 				</div>
 				<div>
-					<img src={musicColumn} alt="music column" />
+					<img src={musicColumn} alt='music column' />
 					<h2>Колонки</h2>
 				</div>
 			</div>
 			<div className={styles.products}>
 				<h1>Популярні товари</h1>
-				{renderProducts()}
+				{renderTelephones()}
 			</div>
 		</div>
 	);

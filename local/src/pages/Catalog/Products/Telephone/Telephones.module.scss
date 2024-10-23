@@ -1,0 +1,10 @@
+.Telephones {
+	width: 100%;
+	padding: 100px;
+	background-color: #fff;
+	display: grid;
+	grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+	grid-gap: 16px;
+	justify-content: center;
+	align-items: center;
+}
