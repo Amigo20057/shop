@@ -1,0 +1,60 @@
+.sideBar {
+	position: relative;
+	width: 300px;
+	padding: 20px;
+	height: 810px;
+	margin-top: 170px;
+	margin-left: 50px;
+	margin-bottom: 20px;
+	border-radius: 8px;
+	color: #000;
+	box-shadow: 1px 1px 20px rgba(0, 0, 0, 0.1);
+
+	div {
+		margin-bottom: 30px;
+	}
+
+	ul {
+		li {
+			display: flex;
+			align-items: center;
+			margin-top: 13px;
+		}
+
+		margin-top: 15px;
+
+		input[type="checkbox"] {
+			width: 20px;
+			height: 20px;
+			-webkit-appearance: none;
+			appearance: none;
+			border: 2px solid #091d9e;
+			border-radius: 4px;
+			outline: none;
+			cursor: pointer;
+			transition: 0.3s;
+		}
+
+		input[type="checkbox"]:checked {
+			background-color: #091d9e;
+			border-color: #091d9e;
+			position: relative;
+		}
+
+		input[type="checkbox"]:checked::after {
+			content: "";
+			position: absolute;
+			top: 1px;
+			left: 5px;
+			width: 5px;
+			height: 10px;
+			border: solid white;
+			border-width: 0 2px 2px 0;
+			transform: rotate(45deg);
+		}
+
+		label {
+			margin-left: 10px;
+		}
+	}
+}
