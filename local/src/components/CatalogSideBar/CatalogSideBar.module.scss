@@ -2,7 +2,7 @@
 	position: relative;
 	width: 300px;
 	padding: 20px;
-	height: 810px;
+	height: 850px;
 	margin-top: 170px;
 	margin-left: 50px;
 	margin-bottom: 20px;
@@ -55,6 +55,13 @@
 
 		label {
 			margin-left: 10px;
+			color: #454545;
 		}
+	}
+
+	p {
+		cursor: pointer;
+		text-decoration: underline;
+		color: #454545;
 	}
 }

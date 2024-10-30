@@ -1,10 +1,12 @@
 import { Router } from "express";
 import { AuthCheck } from "../../utils/auth.middleware.js";
 import { uploadTelephonesPictures } from "../../utils/multer.js";
+import { OrderService } from "../Order/order.service.js";
 import { TelephoneService } from "./telephone.service.js";
 
 const route = Router();
 const telephoneService = new TelephoneService();
+const orderService = new OrderService();
 
 route.get("/", async (req, res) => {
 	try {
@@ -49,7 +51,12 @@ route.post(
 
 route.patch("/update-amount", AuthCheck, async (req, res) => {
 	try {
-		const newAmountTelephones = await telephoneService.updateAmount(req.body);
+		const { name, amount } = req.body;
+		const newAmountTelephones = await telephoneService.updateAmount(
+			name,
+			amount
+		);
+
 		res.status(200).json(newAmountTelephones);
 	} catch (err) {
 		console.log(err);

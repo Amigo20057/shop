@@ -1,5 +1,5 @@
-import { useState } from "react";
-import styles from "./CatalogSideBar.module.scss";
+import { useState } from "react"
+import styles from "./CatalogSideBar.module.scss"
 
 export const CatalogSideBar = () => {
 	const [selectedMemory, setSelectedMemory] = useState(null);
@@ -17,6 +17,13 @@ export const CatalogSideBar = () => {
 		} else if (type === "cores") {
 			setSelectedCores(selectedCores === value ? null : value);
 		}
+	};
+
+	const removeFilters = () => {
+		setSelectedMemory(null);
+		setSelectedRam(null);
+		setSelectedBrand(null);
+		setSelectedCores(null);
 	};
 
 	return (
@@ -184,6 +191,9 @@ export const CatalogSideBar = () => {
 						<label>8</label>
 					</li>
 				</ul>
+			</div>
+			<div>
+				<p onClick={() => removeFilters()}>Скинути фільтри</p>
 			</div>
 		</div>
 	);

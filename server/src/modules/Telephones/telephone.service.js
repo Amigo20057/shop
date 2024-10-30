@@ -37,22 +37,34 @@ export class TelephoneService {
 		}
 	}
 
-	async updateAmount(dto) {
+	async updateAmount(name, amountChange) {
 		try {
-			const existingTelephone = await this.findByName(dto.name);
+			const existingTelephone = await this.findByName(name);
 
 			if (!existingTelephone) {
-				throw new Error(`Telephone with name ${dto.name} not found`);
+				throw new Error(`Telephone with name ${name} not found`);
 			}
 
-			const result = await TelephoneModel.updateOne(
-				{ name: dto.name },
-				{ $set: { amount: dto.amount } }
-			);
+			const newAmount = existingTelephone.amount + amountChange;
+			if (newAmount < 0) {
+				throw new Error(`Insufficient stock for ${name}`);
+			}
 
-			return result;
+			existingTelephone.amount = newAmount;
+			return await existingTelephone.save();
 		} catch (error) {
 			throw new Error("Error updating telephone amount: " + error.message);
 		}
 	}
+
+	// async buyTelephone(dto) {
+	// 	const { name, amount, email } = dto;
+	// 	const telephone = await this.updateAmount(name, -amount);
+
+	// 	const order = await orderService.createOrder(
+	// 		[{ name, price: telephone.price, amount }],
+	// 		email
+	// 	);
+	// 	return order;
+	// }
 }

@@ -4,6 +4,7 @@ import express from "express";
 import mongoose from "mongoose";
 import path from "path";
 import { fileURLToPath } from "url";
+import { orderRouter } from "./modules/Order/order.controller.js";
 import { telephoneRouter } from "./modules/Telephones/telephone.controller.js";
 import { userRouter } from "./modules/Users/user.controller.js";
 
@@ -32,6 +33,7 @@ mongoose
 
 app.use("/product/telephone", telephoneRouter);
 app.use("/user", userRouter);
+app.use("/order", orderRouter);
 
 app.listen(PORT, err => {
 	if (err) {

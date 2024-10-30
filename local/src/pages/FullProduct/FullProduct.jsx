@@ -1,5 +1,6 @@
+import { ChevronLeft } from "lucide-react";
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useProductStore } from "../../Api/store/store";
 import { getOneTelephones } from "../../Api/Telephones/TelephoneApi";
 import styles from "./FullProduct.module.scss";
@@ -9,6 +10,7 @@ export const FullProduct = () => {
 	const products = useProductStore(state => state.products);
 	const [telephone, setTelephone] = useState(null);
 	const { id } = useParams();
+	const navigate = useNavigate();
 
 	const formatPrice = new Intl.NumberFormat("uk-UA", {
 		style: "currency",
@@ -36,6 +38,10 @@ export const FullProduct = () => {
 	}
 	return (
 		<div className={styles.FullProduct}>
+			<div onClick={() => navigate(-1)} className={styles.back}>
+				<ChevronLeft size={40} />
+				<h1>Карточка товара</h1>
+			</div>
 			<div className={styles.contentInfo}>
 				<img
 					src={`http://localhost:4444/telephones/${telephone.picture}`}
