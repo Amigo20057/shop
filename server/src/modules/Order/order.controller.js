@@ -16,4 +16,36 @@ route.post("/buy", AuthCheck, async (req, res) => {
 	}
 });
 
+route.get("/", AuthCheck, async (req, res) => {
+	try {
+		const orders = await orderService.getAll();
+		res.status(200).json(orders);
+	} catch (err) {
+		console.log(err);
+		res.status(500).json({ message: "Error get all orders" });
+	}
+});
+
+route.get("/:id", AuthCheck, async (req, res) => {
+	try {
+		const orderId = req.params.id;
+		const order = await orderService.getOne(orderId);
+		res.status(200).json(order);
+	} catch (err) {
+		console.log(err);
+		res.status(500).json({ message: "Error get one order" });
+	}
+});
+
+route.delete("/:id", AuthCheck, async (req, res) => {
+	try {
+		const orderId = req.params.id;
+		await orderService.delete(orderId);
+		res.status(200).json({ success: true });
+	} catch (err) {
+		console.log(err);
+		res.status(500).json({ message: "Error delete order" });
+	}
+});
+
 export const orderRouter = route;

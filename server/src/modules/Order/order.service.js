@@ -1,5 +1,5 @@
-import { TelephoneService } from "../Telephones/telephone.service.js";
-import OrderModel from "./model/Order.js";
+import { TelephoneService } from "../Telephones/telephone.service.js"
+import OrderModel from "./model/Order.js"
 
 const telephoneService = new TelephoneService();
 
@@ -27,5 +27,17 @@ export class OrderService {
 			console.log(err);
 			throw new Error("Error creating order: " + err.message);
 		}
+	}
+
+	async getAll() {
+		return await OrderModel.find();
+	}
+
+	async getOne(id) {
+		return await OrderModel.findById(id);
+	}
+
+	async delete(id){
+		return await OrderModel.findByIdAndDelete(id);
 	}
 }
