@@ -3,9 +3,9 @@ import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { useProductStore } from "../../Api/store/store";
 import { getOneTelephones } from "../../Api/Telephones/TelephoneApi";
-import styles from "./FullProduct.module.scss";
+import styles from "./FullProductTelephone.module.scss";
 
-export const FullProduct = () => {
+export const FullProductTelephone = () => {
 	const addToBasket = useProductStore(state => state.addToBasket);
 	const products = useProductStore(state => state.products);
 	const [telephone, setTelephone] = useState(null);

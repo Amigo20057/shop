@@ -1,12 +1,10 @@
 import { Router } from "express";
 import { AuthCheck } from "../../utils/auth.middleware.js";
 import { uploadTelephonesPictures } from "../../utils/multer.js";
-import { OrderService } from "../Order/order.service.js";
 import { TelephoneService } from "./telephone.service.js";
 
 const route = Router();
 const telephoneService = new TelephoneService();
-const orderService = new OrderService();
 
 route.get("/", async (req, res) => {
 	try {

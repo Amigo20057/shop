@@ -1,5 +1,5 @@
 import { ChevronLeft } from "lucide-react";
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { getAllTelephones } from "../../../Api/Telephones/TelephoneApi";
 import { CatalogSideBar } from "../../../components";
@@ -8,18 +8,58 @@ import styles from "./Telephones.module.scss";
 
 export const Telephones = () => {
 	const [telephones, setTelephones] = useState([]);
+	const [filteredTelephones, setFilteredTelephones] = useState([]);
+	const [filters, setFilters] = useState({});
 	const navigate = useNavigate();
 
-	useEffect(() => {
-		const fetchTelephones = async () => {
-			const data = await getAllTelephones();
-			setTelephones(data);
-		};
-		fetchTelephones();
+	const fetchTelephones = useCallback(async () => {
+		const data = await getAllTelephones();
+		setTelephones(data);
+		setFilteredTelephones(data);
 	}, []);
 
+	useEffect(() => {
+		fetchTelephones();
+	}, [fetchTelephones]);
+
+	useEffect(() => {
+		const filtered = telephones.filter(telephone => {
+			if (
+				filters.ram &&
+				telephone.characteristics.ram.replace(/\s+/g, "").toLowerCase() !==
+					filters.ram.replace(/\s+/g, "").toLowerCase()
+			) {
+				return false;
+			}
+
+			if (
+				filters.rom &&
+				telephone.characteristics.rom.replace(/\s+/g, "").toLowerCase() !==
+					filters.rom.replace(/\s+/g, "").toLowerCase()
+			) {
+				return false;
+			}
+
+			if (filters.brand && telephone.name.split(" ")[0] !== filters.brand) {
+				return false;
+			}
+
+			if (
+				filters.cores &&
+				Number(telephone.characteristics.cores) !== Number(filters.cores)
+			) {
+				return false;
+			}
+
+			return true;
+		});
+		setFilteredTelephones(filtered);
+		console.log("Current filters:", filters);
+		console.log("All telephones:", telephones);
+	}, [filters, telephones]);
+
 	const renderTelephones = () => {
-		return telephones.map((telephone, index) => (
+		return filteredTelephones.map((telephone, index) => (
 			<Product
 				key={index}
 				_id={telephone._id}
@@ -28,6 +68,7 @@ export const Telephones = () => {
 				price={telephone.price}
 				amount={telephone.amount}
 				product={telephone}
+				productType={"telephone"}
 			/>
 		));
 	};
@@ -38,7 +79,7 @@ export const Telephones = () => {
 				<ChevronLeft size={40} />
 				<h1>Смартфони</h1>
 			</div>
-			<CatalogSideBar />
+			<CatalogSideBar setFilters={setFilters} productType={"telephone"} />
 			<div className={styles.product}>{renderTelephones()}</div>
 		</div>
 	);

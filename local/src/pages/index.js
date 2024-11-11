@@ -1,6 +1,7 @@
+import { Laptops } from "./Catalog/Laptop/Laptops";
 import { Telephones } from "./Catalog/Telephone/Telephones";
-import { FullProduct } from "./FullProduct/FullProduct";
+import { FullProductTelephone } from "./FullProductTelephone/FullProductTelephone";
 import { Home } from "./Home/Home";
 import { NotFound } from "./NotFound";
 
-export { FullProduct, Home, NotFound, Telephones };
+export { FullProductTelephone, Home, Laptops, NotFound, Telephones };

@@ -1,5 +1,5 @@
-import { TelephoneService } from "../Telephones/telephone.service.js"
-import OrderModel from "./model/Order.js"
+import { TelephoneService } from "../telephones/telephone.service.js";
+import OrderModel from "./model/Order.js";
 
 const telephoneService = new TelephoneService();
 
@@ -37,7 +37,7 @@ export class OrderService {
 		return await OrderModel.findById(id);
 	}
 
-	async delete(id){
+	async delete(id) {
 		return await OrderModel.findByIdAndDelete(id);
 	}
 }

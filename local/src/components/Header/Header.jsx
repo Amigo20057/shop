@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import { Basket } from "../Basket/Basket";
+import { Basket } from "../../UI/modals/Basket/Basket";
 import styles from "./Header.module.scss";
 
 export const Header = () => {

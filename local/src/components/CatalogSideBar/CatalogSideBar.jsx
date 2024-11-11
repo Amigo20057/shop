@@ -1,31 +1,39 @@
-import { useState } from "react"
-import styles from "./CatalogSideBar.module.scss"
+import { useState } from "react";
+import styles from "./CatalogSideBar.module.scss";
 
-export const CatalogSideBar = () => {
-	const [selectedMemory, setSelectedMemory] = useState(null);
+export const CatalogSideBar = ({ setFilters, productType }) => {
+	const [selectedRom, setSelectedRom] = useState(null);
 	const [selectedRam, setSelectedRam] = useState(null);
 	const [selectedBrand, setSelectedBrand] = useState(null);
 	const [selectedCores, setSelectedCores] = useState(null);
 
 	const handleCheckboxChange = (value, type) => {
-		if (type === "memory") {
-			setSelectedMemory(selectedMemory === value ? null : value);
+		if (type === "rom") {
+			const rom = selectedRom === value ? null : value;
+			setSelectedRom(rom);
+			setFilters(prev => ({ ...prev, rom }));
 		} else if (type === "ram") {
-			setSelectedRam(selectedRam === value ? null : value);
+			const ram = selectedRam === value ? null : value;
+			setSelectedRam(ram);
+			setFilters(prev => ({ ...prev, ram }));
 		} else if (type === "brand") {
-			setSelectedBrand(selectedBrand === value ? null : value);
+			const brand = selectedBrand === value ? null : value;
+			setSelectedBrand(brand);
+			setFilters(prev => ({ ...prev, brand }));
 		} else if (type === "cores") {
-			setSelectedCores(selectedCores === value ? null : value);
+			const cores = selectedCores === value ? null : value;
+			setSelectedCores(cores);
+			setFilters(prev => ({ ...prev, cores }));
 		}
 	};
 
 	const removeFilters = () => {
-		setSelectedMemory(null);
+		setSelectedRom(null);
 		setSelectedRam(null);
 		setSelectedBrand(null);
 		setSelectedCores(null);
+		setFilters({});
 	};
-
 	return (
 		<div className={styles.sideBar}>
 			<div>
@@ -34,42 +42,42 @@ export const CatalogSideBar = () => {
 					<li>
 						<input
 							type="checkbox"
-							checked={selectedMemory === "512 Гб"}
-							onChange={() => handleCheckboxChange("512 Гб", "memory")}
+							checked={selectedRom === "512 ГБ"}
+							onChange={() => handleCheckboxChange("512 ГБ", "rom")}
 						/>
-						<label>512 Гб</label>
+						<label>512 ГБ</label>
 					</li>
 					<li>
 						<input
 							type="checkbox"
-							checked={selectedMemory === "256 Гб"}
-							onChange={() => handleCheckboxChange("256 Гб", "memory")}
+							checked={selectedRom === "256 ГБ"}
+							onChange={() => handleCheckboxChange("256 ГБ", "rom")}
 						/>
-						<label>256 Гб</label>
+						<label>256 ГБ</label>
 					</li>
 					<li>
 						<input
 							type="checkbox"
-							checked={selectedMemory === "128 Гб"}
-							onChange={() => handleCheckboxChange("128 Гб", "memory")}
+							checked={selectedRom === "128 ГБ"}
+							onChange={() => handleCheckboxChange("128 ГБ", "rom")}
 						/>
-						<label>128 Гб</label>
+						<label>128 ГБ</label>
 					</li>
 					<li>
 						<input
 							type="checkbox"
-							checked={selectedMemory === "64 Гб"}
-							onChange={() => handleCheckboxChange("64 Гб", "memory")}
+							checked={selectedRom === "64 ГБ"}
+							onChange={() => handleCheckboxChange("64 ГБ", "rom")}
 						/>
-						<label>64 Гб</label>
+						<label>64 ГБ</label>
 					</li>
 					<li>
 						<input
 							type="checkbox"
-							checked={selectedMemory === "32 Гб"}
-							onChange={() => handleCheckboxChange("32 Гб", "memory")}
+							checked={selectedRom === "32 ГБ"}
+							onChange={() => handleCheckboxChange("32 ГБ", "rom")}
 						/>
-						<label>32 Гб</label>
+						<label>32 ГБ</label>
 					</li>
 				</ul>
 			</div>

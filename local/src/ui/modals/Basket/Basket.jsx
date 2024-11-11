@@ -1,10 +1,11 @@
-import React from "react";
-import { useProductStore } from "../../Api/store/store";
+import React, { useState } from "react";
+import { useProductStore } from "../../../Api/store/store";
 import styles from "./Basket.module.scss";
 
 export const Basket = ({ isOpenBasket }) => {
 	const products = useProductStore(state => state.products);
 	const decreaseCountBasket = useProductStore(state => state.decreaseCount);
+	const [pictureSrc, setPictureSrc] = useState();
 
 	const formatPrice = new Intl.NumberFormat("uk-UA", {
 		style: "currency",
@@ -42,12 +43,15 @@ export const Basket = ({ isOpenBasket }) => {
 	};
 
 	return (
-		<div className={isOpenBasket ? styles.Basket : styles.closeBasket}>
-			<h1>Кошик</h1>
-			{products.length === 0 && (
-				<p className={styles.voidBasket}>Кошик пустий...</p>
-			)}
-			{renderProducts()}
-		</div>
+		<>
+			<div className={styles.filter}></div>
+			<div className={isOpenBasket ? styles.Basket : styles.closeBasket}>
+				<h1>Кошик</h1>
+				{products.length === 0 && (
+					<p className={styles.voidBasket}>Кошик пустий...</p>
+				)}
+				{renderProducts()}
+			</div>
+		</>
 	);
 };

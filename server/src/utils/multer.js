@@ -7,8 +7,10 @@ const __dirname = path.dirname(__filename);
 
 const telephonesPicturesDir = path.join(
 	__dirname,
-	"../modules/Telephones/pictures"
+	"../modules/telephones/pictures"
 );
+
+const laptopPicturesDir = path.join(__dirname, "../modules/laptops/pictures");
 
 const storageTelephonesPictures = multer.diskStorage({
 	destination: (req, file, cb) => {
@@ -20,6 +22,20 @@ const storageTelephonesPictures = multer.diskStorage({
 	},
 });
 
+const storageLaptopPictures = multer.diskStorage({
+	destination: (req, file, cb) => {
+		cb(null, laptopPicturesDir);
+	},
+	filename: (req, file, cb) => {
+		const ext = path.extname(file.originalname);
+		cb(null, `${Date.now()}${ext}`);
+	},
+});
+
 export const uploadTelephonesPictures = multer({
 	storage: storageTelephonesPictures,
+});
+
+export const uploadLaptopsPictures = multer({
+	storage: storageLaptopPictures,
 });

@@ -4,9 +4,10 @@ import express from "express";
 import mongoose from "mongoose";
 import path from "path";
 import { fileURLToPath } from "url";
-import { orderRouter } from "./modules/Order/order.controller.js";
-import { telephoneRouter } from "./modules/Telephones/telephone.controller.js";
-import { userRouter } from "./modules/Users/user.controller.js";
+import { laptopRouter } from "./modules/laptops/laptop.controller.js";
+import { orderRouter } from "./modules/order/order.controller.js";
+import { telephoneRouter } from "./modules/telephones/telephone.controller.js";
+import { userRouter } from "./modules/users/user.controller.js";
 
 const app = express();
 const PORT = process.env.PORT;
@@ -19,7 +20,12 @@ const __dirname = path.dirname(__filename);
 
 app.use(
 	"/telephones/pictures",
-	express.static(path.join(__dirname, "modules", "Telephones", "pictures"))
+	express.static(path.join(__dirname, "modules", "telephones", "pictures"))
+);
+
+app.use(
+	"/laptops/pictures",
+	express.static(path.join(__dirname, "modules", "laptops", "pictures"))
 );
 
 mongoose
@@ -32,6 +38,7 @@ mongoose
 	});
 
 app.use("/product/telephone", telephoneRouter);
+app.use("/product/laptop", laptopRouter);
 app.use("/user", userRouter);
 app.use("/order", orderRouter);
 

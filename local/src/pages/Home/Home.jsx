@@ -67,17 +67,20 @@ export const Home = () => {
 	}, []);
 
 	const renderTelephones = () => {
-		return telephones.map((telephone, index) => (
-			<Product
-				key={index}
-				_id={telephone._id}
-				picture={telephone.picture}
-				name={telephone.name}
-				price={telephone.price}
-				amount={telephone.amount}
-				product={telephone}
-			/>
-		));
+		return telephones
+			.slice(0, 7)
+			.map((telephone, index) => (
+				<Product
+					key={index}
+					_id={telephone._id}
+					picture={telephone.picture}
+					name={telephone.name}
+					price={telephone.price}
+					amount={telephone.amount}
+					product={telephone}
+					productType={"telephone"}
+				/>
+			));
 	};
 
 	return (
@@ -96,7 +99,7 @@ export const Home = () => {
 					<img src={telephone} alt="telephone" />
 					<h2>Смартфони</h2>
 				</div>
-				<div>
+				<div onClick={() => navigate("/product/laptop")}>
 					<img src={notebook} alt="notebook" />
 					<h2>Ноутбуки</h2>
 				</div>

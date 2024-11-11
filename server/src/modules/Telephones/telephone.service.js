@@ -56,15 +56,4 @@ export class TelephoneService {
 			throw new Error("Error updating telephone amount: " + error.message);
 		}
 	}
-
-	// async buyTelephone(dto) {
-	// 	const { name, amount, email } = dto;
-	// 	const telephone = await this.updateAmount(name, -amount);
-
-	// 	const order = await orderService.createOrder(
-	// 		[{ name, price: telephone.price, amount }],
-	// 		email
-	// 	);
-	// 	return order;
-	// }
 }
