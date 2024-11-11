@@ -1,11 +1,10 @@
-import React, { useState } from "react";
+import React from "react";
 import { useProductStore } from "../../../Api/store/store";
 import styles from "./Basket.module.scss";
 
-export const Basket = ({ isOpenBasket }) => {
+export const Basket = ({ isOpenBasket, setIsOpenBasket }) => {
 	const products = useProductStore(state => state.products);
 	const decreaseCountBasket = useProductStore(state => state.decreaseCount);
-	const [pictureSrc, setPictureSrc] = useState();
 
 	const formatPrice = new Intl.NumberFormat("uk-UA", {
 		style: "currency",
@@ -25,9 +24,23 @@ export const Basket = ({ isOpenBasket }) => {
 				key={product._id}
 				onClick={() => handleRemoveFromBasket(product._id)}
 			>
-				<div className={styles.img}>
+				<div
+					className={`${styles.img} ${
+						product.productType === "laptop"
+							? styles.laptop
+							: product.productType === "telephone"
+							? styles.telephone
+							: ""
+					}`}
+				>
 					<img
-						src={`http://localhost:4444/telephones/${product.picture}`}
+						src={
+							product.productType === "laptop"
+								? `http://localhost:4444/laptops/${product.picture}`
+								: product.productType === "telephone"
+								? `http://localhost:4444/telephones/${product.picture}`
+								: ""
+						}
 						alt={product.name}
 					/>
 				</div>
@@ -43,15 +56,22 @@ export const Basket = ({ isOpenBasket }) => {
 	};
 
 	return (
-		<>
-			<div className={styles.filter}></div>
-			<div className={isOpenBasket ? styles.Basket : styles.closeBasket}>
+		<div className={isOpenBasket ? styles.Basket : styles.closeBasket}>
+			<div
+				onClick={() => setIsOpenBasket(false)}
+				className={styles.filter}
+			></div>
+			<div
+				className={`${styles.products} ${
+					isOpenBasket ? styles.fadeIn : styles.fadeOut
+				}`}
+			>
 				<h1>Кошик</h1>
 				{products.length === 0 && (
 					<p className={styles.voidBasket}>Кошик пустий...</p>
 				)}
 				{renderProducts()}
 			</div>
-		</>
+		</div>
 	);
 };

@@ -2,6 +2,7 @@ import React from "react";
 import { Route, Routes } from "react-router-dom";
 import { Header } from "./components/Header/Header";
 import {
+	FullProductLaptop,
 	FullProductTelephone,
 	Home,
 	Laptops,
@@ -20,6 +21,7 @@ export const App = () => {
 					path="/product/telephone/:id"
 					element={<FullProductTelephone />}
 				/>
+				<Route path="/product/laptop/:id" element={<FullProductLaptop />} />
 				<Route path="/product/laptop" element={<Laptops />} />
 				{/* <Route path='/product/laptop/:id' */}
 				<Route path="*" element={<NotFound />} />

@@ -44,7 +44,7 @@ export const Product = ({
 		if (amount <= 0) {
 			return;
 		}
-		addToBasket({ _id, picture, name, price });
+		addToBasket({ _id, picture, name, price, productType });
 	};
 
 	useEffect(() => {

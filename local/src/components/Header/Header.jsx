@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import { Basket } from "../../UI/modals/Basket/Basket";
+import { Basket } from "../../ui/modals/Basket/Basket";
 import styles from "./Header.module.scss";
 
 export const Header = () => {
@@ -34,7 +34,7 @@ export const Header = () => {
 				</div>
 			</div>
 			<div>
-				<Basket isOpenBasket={isOpenBasket} />
+				<Basket isOpenBasket={isOpenBasket} setIsOpenBasket={setIsOpenBasket} />
 			</div>
 		</div>
 	);
