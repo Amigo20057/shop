@@ -10,7 +10,7 @@ export const useProductStore = create(
 					const existingProductIndex = state.products.findIndex(
 						p => p._id === product._id
 					);
-
+					console.log(product);
 					if (existingProductIndex !== -1) {
 						const updatedProducts = [...state.products];
 						updatedProducts[existingProductIndex].count += 1;

@@ -28,10 +28,15 @@ export const FullProductTelephone = () => {
 	}, [id]);
 
 	const handleAddToBasket = () => {
-		addToBasket(telephone);
+		const _id = telephone._id;
+		const picture = telephone.picture;
+		const name = telephone.name;
+		const price = telephone.price;
+		const productType = "telephone";
+		addToBasket({ _id, picture, name, price, productType });
 	};
 
-	console.log(products);
+	console.log(telephone);
 
 	if (!telephone) {
 		return <p>Loading...</p>;

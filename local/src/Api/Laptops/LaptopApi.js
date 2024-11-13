@@ -6,6 +6,6 @@ export const getAllLaptops = async () => {
 };
 
 export const getOneLaptop = async id => {
-	const { data } = await axios.get(`/product/telephone/${id}`);
+	const { data } = await axios.get(`/product/laptop/${id}`);
 	return data;
 };

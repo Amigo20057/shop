@@ -20,7 +20,8 @@ route.get("/", async (req, res) => {
 
 route.get("/:id", async (req, res) => {
 	try {
-		const laptop = laptopService.getOne(id);
+		const id = req.params.id;
+		const laptop = await laptopService.getOne(id);
 		res.status(200).json(laptop);
 	} catch (err) {
 		console.log(err);

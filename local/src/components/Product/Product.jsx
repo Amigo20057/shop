@@ -27,7 +27,11 @@ export const Product = ({
 
 	const navigate = useNavigate();
 	const navigateToProduct = id => {
-		navigate(`/product/telephone/${id}`);
+		productType === "laptop"
+			? navigate(`/product/laptop/${id}`)
+			: productType === "telephone"
+			? navigate(`/product/telephone/${id}`)
+			: "";
 	};
 
 	const addToFavorite = async () => {
