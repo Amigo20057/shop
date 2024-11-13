@@ -1,10 +1,11 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useProductStore } from "../../../Api/store/store";
 import styles from "./Basket.module.scss";
 
 export const Basket = ({ isOpenBasket, setIsOpenBasket }) => {
 	const products = useProductStore(state => state.products);
 	const decreaseCountBasket = useProductStore(state => state.decreaseCount);
+	const [totalPrice, setTotalPrice] = useState(0);
 
 	const formatPrice = new Intl.NumberFormat("uk-UA", {
 		style: "currency",
@@ -16,6 +17,15 @@ export const Basket = ({ isOpenBasket, setIsOpenBasket }) => {
 	const handleRemoveFromBasket = id => {
 		decreaseCountBasket(id);
 	};
+
+	console.log(totalPrice);
+
+	useEffect(() => {
+		const newTotalPrice = products.reduce((sum, product) => {
+			return sum + product.price * product.count;
+		}, 0);
+		setTotalPrice(newTotalPrice);
+	}, [products]);
 
 	const renderProducts = () => {
 		return products.map(product => (
@@ -71,6 +81,11 @@ export const Basket = ({ isOpenBasket, setIsOpenBasket }) => {
 					<p className={styles.voidBasket}>Кошик пустий...</p>
 				)}
 				{renderProducts()}
+				<div className={styles.totalPrice}>
+					<h1>
+						Загальна ціна <span>{formatPrice(totalPrice)}</span>
+					</h1>
+				</div>
 			</div>
 		</div>
 	);
