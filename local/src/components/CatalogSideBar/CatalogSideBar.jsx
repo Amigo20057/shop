@@ -2,206 +2,84 @@ import { useState } from "react";
 import styles from "./CatalogSideBar.module.scss";
 
 export const CatalogSideBar = ({ setFilters, productType }) => {
-	const [selectedRom, setSelectedRom] = useState(null);
-	const [selectedRam, setSelectedRam] = useState(null);
-	const [selectedBrand, setSelectedBrand] = useState(null);
-	const [selectedCores, setSelectedCores] = useState(null);
+	const [filters, setLocalFilters] = useState({
+		rom: null,
+		ram: null,
+		brand: null,
+		cores: null,
+		storage: null,
+	});
 
+	// Filter options for each product type
+	const options = {
+		telephone: {
+			rom: ["512 ГБ", "256 ГБ", "128 ГБ", "64 ГБ", "32 ГБ"],
+			ram: ["2 ГБ", "3 ГБ", "4 ГБ", "6 ГБ", "8 ГБ"],
+			brand: ["Apple", "Honor", "Samsung", "Huawei", "Xiaomi"],
+			cores: ["4", "6", "8"],
+		},
+		laptop: {
+			ram: ["4 ГБ", "8 ГБ", "16 ГБ"],
+			storage: ["126 ГБ", "256 ГБ", "500 ГБ", "1 ТБ"],
+			brand: ["Apple", "Honor", "Samsung", "Huawei", "Xiaomi"],
+			cores: ["4", "8", "12"],
+		},
+	};
+
+	// Human-readable filter names
+	const filterLabels = {
+		rom: "Вбудована пам'ять",
+		ram: "Оперативна пам'ять",
+		brand: "Бренд",
+		cores: "Кількість ядер",
+		storage: "Накопичувач",
+	};
+
+	// Handle checkbox state changes
 	const handleCheckboxChange = (value, type) => {
-		if (type === "rom") {
-			const rom = selectedRom === value ? null : value;
-			setSelectedRom(rom);
-			setFilters(prev => ({ ...prev, rom }));
-		} else if (type === "ram") {
-			const ram = selectedRam === value ? null : value;
-			setSelectedRam(ram);
-			setFilters(prev => ({ ...prev, ram }));
-		} else if (type === "brand") {
-			const brand = selectedBrand === value ? null : value;
-			setSelectedBrand(brand);
-			setFilters(prev => ({ ...prev, brand }));
-		} else if (type === "cores") {
-			const cores = selectedCores === value ? null : value;
-			setSelectedCores(cores);
-			setFilters(prev => ({ ...prev, cores }));
-		}
+		setLocalFilters(prev => {
+			const updatedValue = prev[type] === value ? null : value;
+			const updatedFilters = { ...prev, [type]: updatedValue };
+			setFilters(updatedFilters);
+			return updatedFilters;
+		});
 	};
 
+	// Reset all filters
 	const removeFilters = () => {
-		setSelectedRom(null);
-		setSelectedRam(null);
-		setSelectedBrand(null);
-		setSelectedCores(null);
-		setFilters({});
+		const resetFilters = Object.keys(filters).reduce(
+			(acc, key) => ({ ...acc, [key]: null }),
+			{}
+		);
+		setLocalFilters(resetFilters);
+		setFilters(resetFilters);
 	};
+
 	return (
 		<div className={styles.sideBar}>
+			{productType in options &&
+				Object.entries(options[productType]).map(([filterType, values]) => (
+					<div key={filterType}>
+						<h4>{filterLabels[filterType]}</h4>
+						<ul>
+							{values.map(value => (
+								<li key={value}>
+									<input
+										type="checkbox"
+										id={`${filterType}-${value}`}
+										checked={filters[filterType] === value}
+										onChange={() => handleCheckboxChange(value, filterType)}
+									/>
+									<label htmlFor={`${filterType}-${value}`}>{value}</label>
+								</li>
+							))}
+						</ul>
+					</div>
+				))}
 			<div>
-				Вбудована пам'ять
-				<ul>
-					<li>
-						<input
-							type="checkbox"
-							checked={selectedRom === "512 ГБ"}
-							onChange={() => handleCheckboxChange("512 ГБ", "rom")}
-						/>
-						<label>512 ГБ</label>
-					</li>
-					<li>
-						<input
-							type="checkbox"
-							checked={selectedRom === "256 ГБ"}
-							onChange={() => handleCheckboxChange("256 ГБ", "rom")}
-						/>
-						<label>256 ГБ</label>
-					</li>
-					<li>
-						<input
-							type="checkbox"
-							checked={selectedRom === "128 ГБ"}
-							onChange={() => handleCheckboxChange("128 ГБ", "rom")}
-						/>
-						<label>128 ГБ</label>
-					</li>
-					<li>
-						<input
-							type="checkbox"
-							checked={selectedRom === "64 ГБ"}
-							onChange={() => handleCheckboxChange("64 ГБ", "rom")}
-						/>
-						<label>64 ГБ</label>
-					</li>
-					<li>
-						<input
-							type="checkbox"
-							checked={selectedRom === "32 ГБ"}
-							onChange={() => handleCheckboxChange("32 ГБ", "rom")}
-						/>
-						<label>32 ГБ</label>
-					</li>
-				</ul>
-			</div>
-			<div>
-				Оперативна пам'ять
-				<ul>
-					<li>
-						<input
-							type="checkbox"
-							checked={selectedRam === "2 ГБ"}
-							onChange={() => handleCheckboxChange("2 ГБ", "ram")}
-						/>
-						<label>2 ГБ</label>
-					</li>
-					<li>
-						<input
-							type="checkbox"
-							checked={selectedRam === "3 ГБ"}
-							onChange={() => handleCheckboxChange("3 ГБ", "ram")}
-						/>
-						<label>3 ГБ</label>
-					</li>
-					<li>
-						<input
-							type="checkbox"
-							checked={selectedRam === "4 ГБ"}
-							onChange={() => handleCheckboxChange("4 ГБ", "ram")}
-						/>
-						<label>4 ГБ</label>
-					</li>
-					<li>
-						<input
-							type="checkbox"
-							checked={selectedRam === "6 ГБ"}
-							onChange={() => handleCheckboxChange("6 ГБ", "ram")}
-						/>
-						<label>6 ГБ</label>
-					</li>
-					<li>
-						<input
-							type="checkbox"
-							checked={selectedRam === "8 ГБ"}
-							onChange={() => handleCheckboxChange("8 ГБ", "ram")}
-						/>
-						<label>8 ГБ</label>
-					</li>
-				</ul>
-			</div>
-			<div>
-				Бренд
-				<ul>
-					<li>
-						<input
-							type="checkbox"
-							checked={selectedBrand === "Apple"}
-							onChange={() => handleCheckboxChange("Apple", "brand")}
-						/>
-						<label>Apple</label>
-					</li>
-					<li>
-						<input
-							type="checkbox"
-							checked={selectedBrand === "Honor"}
-							onChange={() => handleCheckboxChange("Honor", "brand")}
-						/>
-						<label>Honor</label>
-					</li>
-					<li>
-						<input
-							type="checkbox"
-							checked={selectedBrand === "Samsung"}
-							onChange={() => handleCheckboxChange("Samsung", "brand")}
-						/>
-						<label>Samsung</label>
-					</li>
-					<li>
-						<input
-							type="checkbox"
-							checked={selectedBrand === "Huawei"}
-							onChange={() => handleCheckboxChange("Huawei", "brand")}
-						/>
-						<label>Huawei</label>
-					</li>
-					<li>
-						<input
-							type="checkbox"
-							checked={selectedBrand === "Xiaomi"}
-							onChange={() => handleCheckboxChange("Xiaomi", "brand")}
-						/>
-						<label>Xiaomi</label>
-					</li>
-				</ul>
-			</div>
-			<div>
-				Кількість ядер
-				<ul>
-					<li>
-						<input
-							type="checkbox"
-							checked={selectedCores === "4"}
-							onChange={() => handleCheckboxChange("4", "cores")}
-						/>
-						<label>4</label>
-					</li>
-					<li>
-						<input
-							type="checkbox"
-							checked={selectedCores === "6"}
-							onChange={() => handleCheckboxChange("6", "cores")}
-						/>
-						<label>6</label>
-					</li>
-					<li>
-						<input
-							type="checkbox"
-							checked={selectedCores === "8"}
-							onChange={() => handleCheckboxChange("8", "cores")}
-						/>
-						<label>8</label>
-					</li>
-				</ul>
-			</div>
-			<div>
-				<p onClick={() => removeFilters()}>Скинути фільтри</p>
+				<p onClick={removeFilters} className={styles.clearFilters}>
+					Скинути фільтри
+				</p>
 			</div>
 		</div>
 	);
