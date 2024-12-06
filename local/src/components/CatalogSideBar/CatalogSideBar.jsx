@@ -10,7 +10,6 @@ export const CatalogSideBar = ({ setFilters, productType }) => {
 		storage: null,
 	});
 
-	// Filter options for each product type
 	const options = {
 		telephone: {
 			rom: ["512 ГБ", "256 ГБ", "128 ГБ", "64 ГБ", "32 ГБ"],
@@ -26,7 +25,6 @@ export const CatalogSideBar = ({ setFilters, productType }) => {
 		},
 	};
 
-	// Human-readable filter names
 	const filterLabels = {
 		rom: "Вбудована пам'ять",
 		ram: "Оперативна пам'ять",
@@ -35,7 +33,6 @@ export const CatalogSideBar = ({ setFilters, productType }) => {
 		storage: "Накопичувач",
 	};
 
-	// Handle checkbox state changes
 	const handleCheckboxChange = (value, type) => {
 		setLocalFilters(prev => {
 			const updatedValue = prev[type] === value ? null : value;
@@ -45,7 +42,6 @@ export const CatalogSideBar = ({ setFilters, productType }) => {
 		});
 	};
 
-	// Reset all filters
 	const removeFilters = () => {
 		const resetFilters = Object.keys(filters).reduce(
 			(acc, key) => ({ ...acc, [key]: null }),

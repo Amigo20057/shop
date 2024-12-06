@@ -102,7 +102,12 @@ export const Product = ({
 					)}
 				</div>
 			</div>
-			<button onClick={() => handleAddToBasket(product)}>У кошик</button>
+			{/* <button onClick={() => handleAddToBasket(product)}>У кошик</button> */}
+			{amount <= 0 ? (
+				<button className={styles.notAvailable}>Немає в наявності</button>
+			) : (
+				<button onClick={() => handleAddToBasket(product)}>У кошик</button>
+			)}
 		</div>
 	);
 };

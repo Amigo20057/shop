@@ -13,21 +13,21 @@ export const useProductStore = create(
 					console.log(product);
 					if (existingProductIndex !== -1) {
 						const updatedProducts = [...state.products];
-						updatedProducts[existingProductIndex].count += 1;
+						updatedProducts[existingProductIndex].amount += 1;
 						return { products: updatedProducts };
 					} else {
-						return { products: [...state.products, { ...product, count: 1 }] };
+						return { products: [...state.products, { ...product, amount: 1 }] };
 					}
 				}),
-			decreaseCount: productId =>
+			decreaseAmount: productId =>
 				set(state => {
 					const productIndex = state.products.findIndex(
 						p => p._id === productId
 					);
 					if (productIndex !== -1) {
 						const updatedProducts = [...state.products];
-						if (updatedProducts[productIndex].count > 1) {
-							updatedProducts[productIndex].count -= 1;
+						if (updatedProducts[productIndex].amount > 1) {
+							updatedProducts[productIndex].amount -= 1;
 						} else {
 							updatedProducts.splice(productIndex, 1);
 						}
@@ -35,6 +35,11 @@ export const useProductStore = create(
 					}
 					return state;
 				}),
+			clearBasket: () => {
+				set(() => ({
+					products: [],
+				}));
+			},
 		}),
 		{ name: "product-storage" }
 	)

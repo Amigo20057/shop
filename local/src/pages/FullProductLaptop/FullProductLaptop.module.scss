@@ -80,7 +80,19 @@
 				transition: background-color 0.25s;
 			}
 
-			button:hover {
+			button.notAvailable {
+				width: 200px;
+				height: 40px;
+				margin-top: 20px;
+				margin-left: 5px;
+				background-color: #9a9a9a;
+				color: #fff;
+				border: none;
+				border-radius: 8px;
+				transition: background-color 0.15s;
+			}
+
+			button:hover:not(button.notAvailable) {
 				background-color: #3947a2;
 			}
 		}

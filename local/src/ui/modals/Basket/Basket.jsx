@@ -1,11 +1,15 @@
 import React, { useEffect, useState } from "react";
+import axios from "../../../Api/axios";
 import { useProductStore } from "../../../Api/store/store";
 import styles from "./Basket.module.scss";
 
 export const Basket = ({ isOpenBasket, setIsOpenBasket }) => {
 	const products = useProductStore(state => state.products);
-	const decreaseCountBasket = useProductStore(state => state.decreaseCount);
+	const decreaseAmountBasket = useProductStore(state => state.decreaseAmount);
+	const clearBasket = useProductStore(state => state.clearBasket);
 	const [totalPrice, setTotalPrice] = useState(0);
+	const [order, setOrder] = useState([]);
+	const [email, setEmail] = useState("");
 
 	const formatPrice = new Intl.NumberFormat("uk-UA", {
 		style: "currency",
@@ -15,17 +19,38 @@ export const Basket = ({ isOpenBasket, setIsOpenBasket }) => {
 	}).format;
 
 	const handleRemoveFromBasket = id => {
-		decreaseCountBasket(id);
+		decreaseAmountBasket(id);
 	};
 
 	console.log(totalPrice);
 
 	useEffect(() => {
 		const newTotalPrice = products.reduce((sum, product) => {
-			return sum + product.price * product.count;
+			return sum + product.price * product.amount;
 		}, 0);
 		setTotalPrice(newTotalPrice);
 	}, [products]);
+
+	const createOrder = async () => {
+		const order = {
+			products,
+			email,
+		};
+		setOrder(order);
+		console.log(order);
+
+		try {
+			await axios.post("/order/buy", order);
+			alert("Замовлення створене");
+			setIsOpenBasket(false);
+			clearBasket();
+		} catch (err) {
+			console.log(err);
+			alert("Помилка при створенні замовлення");
+			setIsOpenBasket(false);
+			clearBasket();
+		}
+	};
 
 	const renderProducts = () => {
 		return products.map(product => (
@@ -59,7 +84,7 @@ export const Basket = ({ isOpenBasket, setIsOpenBasket }) => {
 				</div>
 				<div className={styles.productPrice}>
 					<h3>{formatPrice(product.price)}</h3>
-					<h3>Кількість: {product.count}</h3>
+					<h3>Кількість: {product.amount}</h3>
 				</div>
 			</div>
 		));
@@ -86,6 +111,17 @@ export const Basket = ({ isOpenBasket, setIsOpenBasket }) => {
 						Загальна ціна <span>{formatPrice(totalPrice)}</span>
 					</h1>
 				</div>
+				{products.length !== 0 && (
+					<div className={styles.buyProducts}>
+						<input
+							type="email"
+							id="email"
+							placeholder="email"
+							onChange={e => setEmail(e.target.value)}
+						/>
+						<button onClick={() => createOrder()}>Замовити</button>
+					</div>
+				)}
 			</div>
 		</div>
 	);

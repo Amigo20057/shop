@@ -5,7 +5,7 @@ import { OrderService } from "./order.service.js";
 const route = Router();
 const orderService = new OrderService();
 
-route.post("/buy", AuthCheck, async (req, res) => {
+route.post("/buy", async (req, res) => {
 	try {
 		const { products, email } = req.body;
 		const order = await orderService.createOrder(products, email);

@@ -1,7 +1,9 @@
+import { LaptopService } from "../laptops/laptop.service.js";
 import { TelephoneService } from "../telephones/telephone.service.js";
 import OrderModel from "./model/Order.js";
 
 const telephoneService = new TelephoneService();
+const laptopService = new LaptopService();
 
 export class OrderService {
 	async createOrder(products, email) {
@@ -11,7 +13,12 @@ export class OrderService {
 				if (!product.name || product.amount <= 0 || !product.price) {
 					throw new Error("Invalid product in order");
 				}
-				await telephoneService.updateAmount(product.name, -product.amount);
+				if (product.productType === "telephone") {
+					await telephoneService.updateAmount(product.name, -product.amount);
+				} else if (product.productType === "laptop") {
+					await laptopService.updateAmount(product.name, -product.amount);
+				}
+
 				totalPrice += product.price * product.amount;
 			}
 

@@ -50,21 +50,37 @@
 		background-color: #091d9e;
 		color: #fff;
 		border: none;
+		cursor: pointer;
 		border-radius: 8px;
 		transition: background-color 0.15s;
 	}
 
-	button:hover {
+	button.notAvailable {
+		width: 164px;
+		height: 40px;
+		margin-top: 20px;
+		margin-left: 5px;
+		background-color: #9a9a9a;
+		color: #fff;
+		border: none;
+		border-radius: 8px;
+		transition: background-color 0.15s;
+		cursor: no-drop;
+	}
+
+	button:hover:not(button.notAvailable) {
 		background-color: #3947a2;
 	}
 }
 
 .telephoneImg {
+	cursor: pointer;
 	width: 169px;
 	height: 216px;
 }
 
 .laptopImg {
+	cursor: pointer;
 	width: 224px;
 	height: 150px;
 }

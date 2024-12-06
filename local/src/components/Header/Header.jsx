@@ -17,10 +17,10 @@ export const Header = () => {
 				<input type="text" placeholder="Пошук" />
 			</div>
 			<div className={styles.tabBar}>
-				<div className={styles.catalog}>
+				{/* <div className={styles.catalog}>
 					<img src="icon_catalog.png" alt="catalog" />
 					<p>Каталог</p>
-				</div>
+				</div> */}
 				<div
 					className={styles.basket}
 					onClick={() => setIsOpenBasket(!isOpenBasket)}
@@ -28,10 +28,10 @@ export const Header = () => {
 					<img src="icon_basket.png" alt="basket" />
 					<p>Кошик</p>
 				</div>
-				<div className={styles.profile}>
+				{/* <div className={styles.profile}>
 					<img src="icon_profile.png" alt="profile" />
 					<p>Профіль</p>
-				</div>
+				</div> */}
 			</div>
 			<div>
 				<Basket isOpenBasket={isOpenBasket} setIsOpenBasket={setIsOpenBasket} />

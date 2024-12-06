@@ -103,19 +103,19 @@ export const Home = () => {
 					<img src={notebook} alt="notebook" />
 					<h2>Ноутбуки</h2>
 				</div>
-				<div>
+				<div style={{ cursor: "no-drop" }}>
 					<img src={pc} alt="computer" />
 					<h2>Комп'ютери</h2>
 				</div>
-				<div>
+				<div style={{ cursor: "no-drop" }}>
 					<img src={tv} alt="tv" />
 					<h2>Телевізори</h2>
 				</div>
-				<div>
+				<div style={{ cursor: "no-drop" }}>
 					<img src={tablet} alt="tablet" />
 					<h2>Планшети</h2>
 				</div>
-				<div>
+				<div style={{ cursor: "no-drop" }}>
 					<img src={musicColumn} alt="music column" />
 					<h2>Колонки</h2>
 				</div>

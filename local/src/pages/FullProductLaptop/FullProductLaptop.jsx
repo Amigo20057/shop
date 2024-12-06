@@ -72,7 +72,11 @@ export const FullProductLaptop = () => {
 				<div className={styles.toBasket}>
 					<div>
 						<h1>{formatPrice(laptop.price)}</h1>
-						<button onClick={handleAddToBasket}>У кошик</button>
+						{laptop.amount <= 0 ? (
+							<button className={styles.notAvailable}>Немає в наявності</button>
+						) : (
+							<button onClick={handleAddToBasket}>У кошик</button>
+						)}
 					</div>
 				</div>
 			</div>

@@ -1,6 +1,10 @@
 import LaptopModel from "./model/Laptop.js";
 
 export class LaptopService {
+	async findByName(name) {
+		return await LaptopModel.findOne({ name: name });
+	}
+
 	async getAll() {
 		return await LaptopModel.find();
 	}
@@ -34,8 +38,25 @@ export class LaptopService {
 		}
 	}
 
-	async updateAmount(name, amount) {
-		//
+	async updateAmount(name, amountChange) {
+		try {
+			const existLaptop = await this.findByName(name);
+			if (!existLaptop) {
+				throw new Error(`Laptop with name ${name} not found`);
+			}
+
+			const newAmount = existLaptop.amount + amountChange;
+			if (newAmount < 0) {
+				throw new Error(`Insufficient stock for ${name}`);
+			}
+
+			existLaptop.amount = newAmount;
+			const saved = await existLaptop.save();
+			return saved;
+		} catch (error) {
+			console.error("Error updating laptop amount:", error.message);
+			throw new Error("Error updating laptop amount: " + error.message);
+		}
 	}
 
 	async delete(id) {
