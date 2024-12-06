@@ -1,5 +1,7 @@
 import React from "react";
 import { Route, Routes } from "react-router-dom";
+import { Login } from "./admin/auth/Login/Login";
+import { AdminHome } from "./admin/pages/AgminHome/AdminHome";
 import { Header } from "./components/Header/Header";
 import {
 	FullProductLaptop,
@@ -24,6 +26,8 @@ export const App = () => {
 				<Route path="/product/laptop/:id" element={<FullProductLaptop />} />
 				<Route path="/product/laptop" element={<Laptops />} />
 				{/* <Route path='/product/laptop/:id' */}
+				<Route path="/admin/login" element={<Login />} />
+				<Route path="/admin/" element={<AdminHome />} />
 				<Route path="*" element={<NotFound />} />
 			</Routes>
 		</>
