@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import { AiFillHeart, AiOutlineHeart } from "react-icons/ai";
 import { useNavigate } from "react-router-dom";
 import { useProductStore } from "../../Api/store/store";
 
@@ -17,7 +16,6 @@ export const Product = ({
 	const addToBasket = useProductStore(state => state.addToBasket);
 	const [isFilled, setIsFilled] = useState(false);
 	const [pictureSrc, setPictureSrc] = useState();
-
 	const formatPrice = new Intl.NumberFormat("uk-UA", {
 		style: "currency",
 		currency: "UAH",
@@ -94,13 +92,6 @@ export const Product = ({
 				) : (
 					<p style={{ color: "red" }}>немає в наявності</p>
 				)}
-				<div className={styles.like} onClick={addToFavorite}>
-					{isFilled ? (
-						<AiFillHeart className={styles.svg} size={24} color="red" />
-					) : (
-						<AiOutlineHeart className={styles.svg} size={24} color="red" />
-					)}
-				</div>
 			</div>
 			{/* <button onClick={() => handleAddToBasket(product)}>У кошик</button> */}
 			{amount <= 0 ? (
