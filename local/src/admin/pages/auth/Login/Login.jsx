@@ -1,9 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
-import { checkAuth, login } from "../../../Api/Auth/AuthApi";
+import { useNavigate } from "react-router-dom";
+import { checkAuth, login } from "../../../../Api/Auth/AuthApi";
+import styles from "./Login.module.scss";
 
 export const Login = () => {
 	const [isAuth, setIsAuth] = useState(false);
+	const navigate = useNavigate();
 	const {
 		register,
 		handleSubmit,
@@ -12,11 +15,18 @@ export const Login = () => {
 
 	useEffect(() => {
 		const fetchAuth = async () => {
-			const authStatus = await checkAuth();
-			setIsAuth(authStatus);
+			try {
+				const authStatus = await checkAuth();
+				if (authStatus) {
+					navigate("/admin");
+				}
+				setIsAuth(authStatus);
+			} catch (error) {
+				console.error("Ошибка проверки авторизации", error);
+			}
 		};
 		fetchAuth();
-	}, []);
+	}, [navigate]);
 
 	const onSubmit = async values => {
 		try {
@@ -26,33 +36,29 @@ export const Login = () => {
 				return;
 			}
 			if ("token" in data) {
-				alert(data.token);
 				window.localStorage.setItem("token", data.token);
+				navigate("/admin");
 			}
 		} catch (error) {
 			alert("Помилка авторизації: " + error.message);
 		}
 	};
 
-	// if(isAuth){
-	// 	return <Navigate to={}
-	// }
-
 	return (
-		<div>
+		<div className={styles.login}>
 			<h1>Авторизація</h1>
 			<form onSubmit={handleSubmit(onSubmit)}>
 				<input
 					{...register("email", { required: "Вкажіть почту" })}
-					placeholder="E-mail"
-					type="email"
+					placeholder='E-mail'
+					type='email'
 				/>
 				<input
 					{...register("password", { required: "Вкажіть пароль" })}
-					placeholder="Пароль"
-					type="password"
+					placeholder='Пароль'
+					type='password'
 				/>
-				<button type="submit">Увійти</button>
+				<button type='submit'>Увійти</button>
 			</form>
 		</div>
 	);
