@@ -9,8 +9,11 @@ import { Telephone } from "../telephones/Telephone";
 
 import { NotFound } from "../../../pages";
 
+import styles from "./adminHome.module.scss";
+
 export const AdminHome = () => {
 	const [isAuth, setIsAuth] = useState(null);
+	const [activeBtnOptions, setActiveBtnOptions] = useState(1);
 
 	useEffect(() => {
 		const fetchAuth = async () => {
@@ -34,8 +37,11 @@ export const AdminHome = () => {
 	}
 
 	return (
-		<>
-			<SideBar />
+		<div className={styles.adminHome}>
+			<SideBar
+				activeBtnOptions={activeBtnOptions}
+				setActiveBtnOptions={setActiveBtnOptions}
+			/>
 			<Routes>
 				{/* Вложенные маршруты */}
 				<Route path='/orders' element={<Order />} />
@@ -45,6 +51,6 @@ export const AdminHome = () => {
 				{/* Обработка несуществующих маршрутов */}
 				<Route path='*' element={<NotFound />} />
 			</Routes>
-		</>
+		</div>
 	);
 };
