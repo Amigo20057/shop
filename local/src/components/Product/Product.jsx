@@ -52,19 +52,12 @@ export const Product = ({
 	useEffect(() => {
 		const src =
 			productType === "laptop"
-				? `http://localhost:4444/laptops/${picture}`
+				? `http://localhost:4000/laptop/pictures/${picture}`
 				: productType === "telephone"
-				? `http://localhost:4444/telephones/${picture}`
+				? `http://localhost:4000/phone/pictures/${picture}`
 				: "";
 		setPictureSrc(src);
 	}, [productType, picture]);
-
-	// const productPictureSrc = () => {
-	// 	if (productType === "laptop")
-	// 		setPictureSrc(`http://localhost:4444/laptops/${picture}`);
-	// 	if (productType === "telephone")
-	// 		setPictureSrc(`http://localhost:4444/telephones/${picture}`);
-	// };
 
 	return (
 		<div className={styles.product}>
@@ -93,7 +86,6 @@ export const Product = ({
 					<p style={{ color: "red" }}>немає в наявності</p>
 				)}
 			</div>
-			{/* <button onClick={() => handleAddToBasket(product)}>У кошик</button> */}
 			{amount <= 0 ? (
 				<button className={styles.notAvailable}>Немає в наявності</button>
 			) : (

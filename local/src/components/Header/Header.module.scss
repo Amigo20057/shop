@@ -46,6 +46,16 @@
 		}
 	}
 
+	.searchProduct {
+		position: absolute;
+		z-index: 55;
+		top: 100px;
+		left: 180px;
+		width: 80%;
+		height: 50px;
+		background-color: purple;
+	}
+
 	.tabBar {
 		width: 50px;
 		height: 46px;

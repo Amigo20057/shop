@@ -1,8 +1,8 @@
-import { Laptops } from "./Catalog/Laptop/Laptops";
-import { Telephones } from "./Catalog/Telephone/Telephones";
-import { FullProductLaptop } from "./FullProductLaptop/FullProductLaptop";
-import { FullProductTelephone } from "./FullProductTelephone/FullProductTelephone";
-import { Home } from "./Home/Home";
+import { Laptops } from "./catalog/laptop/Laptops";
+import { Telephones } from "./catalog/Telephone/Telephones";
+import { FullProductLaptop } from "./fullProductLaptop/FullProductLaptop";
+import { FullProductTelephone } from "./fullProductTelephone/FullProductTelephone";
+import { Home } from "./home/Home";
 import { NotFound } from "./NotFound";
 
 export {
