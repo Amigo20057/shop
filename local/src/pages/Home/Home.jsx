@@ -1,7 +1,7 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import { Product } from "../../components/product/Product";
-import { usePhones } from "../../hooks/phones/usePhones";
+import { usePhones } from "../../hooks/products/phones/usePhones";
 import {
 	banner,
 	musicColumn,
@@ -15,7 +15,7 @@ import styles from "./Home.module.scss";
 
 export const Home = () => {
 	const navigate = useNavigate();
-	const { data, isLoading } = usePhones();
+	const { data, isLoading } = usePhones(7);
 	console.log(data);
 
 	if (isLoading) {
@@ -23,22 +23,18 @@ export const Home = () => {
 	}
 
 	const renderTelephones = () => {
-		return (
-			data
-				// .slice(0, 7)
-				.map((telephone, index) => (
-					<Product
-						key={index}
-						_id={telephone._id}
-						picture={telephone.picture}
-						name={telephone.name}
-						price={telephone.price}
-						amount={telephone.amount}
-						product={telephone}
-						productType={"telephone"}
-					/>
-				))
-		);
+		return data.map((telephone, index) => (
+			<Product
+				key={index}
+				_id={telephone._id}
+				picture={telephone.picture}
+				name={telephone.name}
+				price={telephone.price}
+				amount={telephone.amount}
+				product={telephone}
+				productType={"telephone"}
+			/>
+		));
 	};
 
 	return (
@@ -53,29 +49,39 @@ export const Home = () => {
 			</div>
 			<div className={styles.catalog}>
 				<h1>Каталог</h1>
-				<div onClick={() => navigate("/product/telephone")}>
+				<div
+					className={styles.active}
+					onClick={() => navigate("/product/telephones")}
+				>
 					<img src={telephone} alt='telephone' />
 					<h2>Смартфони</h2>
 				</div>
-				<div onClick={() => navigate("/product/laptop")}>
+				<div
+					className={styles.active}
+					onClick={() => navigate("/product/laptop")}
+				>
 					<img src={notebook} alt='notebook' />
 					<h2>Ноутбуки</h2>
 				</div>
 				<div style={{ cursor: "no-drop" }}>
 					<img src={pc} alt='computer' />
 					<h2>Комп'ютери</h2>
+					<div className={styles.close}></div>
 				</div>
 				<div style={{ cursor: "no-drop" }}>
 					<img src={tv} alt='tv' />
 					<h2>Телевізори</h2>
+					<div className={styles.close}></div>
 				</div>
 				<div style={{ cursor: "no-drop" }}>
 					<img src={tablet} alt='tablet' />
 					<h2>Планшети</h2>
+					<div className={styles.close}></div>
 				</div>
 				<div style={{ cursor: "no-drop" }}>
 					<img src={musicColumn} alt='music column' />
 					<h2>Колонки</h2>
+					<div className={styles.close}></div>
 				</div>
 			</div>
 			<div className={styles.products}>

@@ -68,7 +68,8 @@ route.get("/by-id/:productId", async (req, res) => {
 
 route.get("/phones", async (req, res) => {
 	try {
-		const telephones = await findAllProductsByCategory("phone");
+		const { limit } = req.query;
+		const telephones = await findAllProductsByCategory("phone", limit);
 		res.status(200).json(telephones);
 	} catch (error) {
 		logger.error(error);

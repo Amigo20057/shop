@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { Basket } from "../../ui/modals/Basket/Basket";
 import styles from "./Header.module.scss";
+import { icon_basket, icon_profile, icon_search } from "./assets";
 
 export const Header = () => {
 	const [isOpenBasket, setIsOpenBasket] = useState(false);
@@ -14,7 +15,7 @@ export const Header = () => {
 				<h1>GLANCE</h1>
 			</Link>
 			<div className={styles.search}>
-				<img src='icon_search.png' alt='search' />
+				<img src={icon_search} alt='search' />
 				<input type='text' placeholder='Пошук' />
 			</div>
 			{/* {isSearch && <div className={styles.searchProduct}>{12323}</div>} */}
@@ -27,13 +28,16 @@ export const Header = () => {
 					className={styles.basket}
 					onClick={() => setIsOpenBasket(!isOpenBasket)}
 				>
-					<img src='icon_basket.png' alt='basket' />
+					<img src={icon_basket} alt='basket' />
 					<p>Кошик</p>
 				</div>
-				{/* <div className={styles.profile}>
-					<img src="icon_profile.png" alt="profile" />
+				<div
+					className={styles.profile}
+					onClick={() => (window.location.href = "/profile")}
+				>
+					<img src={icon_profile} alt='profile' />
 					<p>Профіль</p>
-				</div> */}
+				</div>
 			</div>
 			<div>
 				<Basket isOpenBasket={isOpenBasket} setIsOpenBasket={setIsOpenBasket} />

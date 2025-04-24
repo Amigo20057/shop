@@ -14,8 +14,12 @@ export async function findLaptopByName(name) {
 	return await Laptop.findOne({ name: name });
 }
 
-export async function findAllProductsByCategory(category) {
-	return await Product.find({ type: `${category}` });
+export async function findAllProductsByCategory(category, limit = null) {
+	const queryOptions = {};
+	if (limit) {
+		queryOptions.limit = parseInt(limit);
+	}
+	return await Product.find({ type: `${category}` }, null, queryOptions);
 }
 
 export async function createPhone(phone) {
@@ -67,8 +71,8 @@ export async function filterPhones(query) {
 	let filter = {};
 	if (name) filter.name = { $regex: name, $options: "i" };
 	if (brand) filter.brand = brand;
-	if (ram) filter.ram = Number(ram);
-	if (rom) filter.rom = Number(rom);
+	if (ram) filter.ram = ram;
+	if (rom) filter.rom = rom;
 	if (battery) filter.battery = battery;
 	const phones = await Product.find(filter);
 	return phones;

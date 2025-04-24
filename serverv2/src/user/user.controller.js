@@ -25,7 +25,7 @@ route.post("/login", async (req, res) => {
 	}
 });
 
-route.get("/me", AuthCheck, async (req, res) => {
+route.get("/profile", AuthCheck, async (req, res) => {
 	try {
 		const user = await profile(req._id);
 		res.status(200).json(user);

@@ -1,7 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 
-export const getProduct = async productId => {
+const getProduct = async productId => {
 	return await axios.get(`http://localhost:4000/products/by-id/${productId}`);
 };
 

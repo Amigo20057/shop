@@ -2,7 +2,7 @@
 	position: relative;
 	width: 300px;
 	padding: 20px;
-	height: 850px;
+	height: 900px;
 	margin-top: 170px;
 	margin-left: 50px;
 	margin-bottom: 20px;
@@ -61,7 +61,12 @@
 
 	p {
 		cursor: pointer;
+		margin-bottom: 10px;
 		text-decoration: underline;
 		color: #454545;
+	}
+
+	p:first-child {
+		color: #091d9e;
 	}
 }
