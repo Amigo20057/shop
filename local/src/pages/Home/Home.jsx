@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { useNavigate } from "react-router-dom";
-import { getAllTelephones } from "../../Api/Telephones/TelephoneApi";
-import { Product } from "../../components/Product/Product";
+import { Product } from "../../components/product/Product";
+import { usePhones } from "../../hooks/products/phones/usePhones";
 import {
 	banner,
 	musicColumn,
@@ -13,74 +13,28 @@ import {
 } from "./assets";
 import styles from "./Home.module.scss";
 
-// const telephonesTest = [
-// 	{
-// 		path: testTelephone,
-// 		name: "Смартфон Apple iPhone 14",
-// 		price: "52 999грн",
-// 		amount: 3,
-// 	},
-// 	{
-// 		path: testTelephone,
-// 		name: "Смартфон Apple iPhone 14",
-// 		price: "52 999грн",
-// 		amount: 3,
-// 	},
-// 	{
-// 		path: testTelephone,
-// 		name: "Смартфон Apple iPhone 14",
-// 		price: "52 999грн",
-// 		amount: 3,
-// 	},
-// 	{
-// 		path: testTelephone,
-// 		name: "Смартфон Apple iPhone 14",
-// 		price: "52 999грн",
-// 		amount: 3,
-// 	},
-// 	{
-// 		path: testTelephone,
-// 		name: "Смартфон Apple iPhone 14",
-// 		price: "52 999грн",
-// 		amount: 3,
-// 	},
-// 	{
-// 		path: testTelephone,
-// 		name: "Смартфон Apple iPhone 14",
-// 		price: "52 999грн",
-// 		amount: 0,
-// 	},
-// ];
-
 export const Home = () => {
-	const [telephones, setTelephones] = useState([]);
-
 	const navigate = useNavigate();
-	console.log(telephones);
+	const { data, isLoading } = usePhones(7);
+	console.log(data);
 
-	useEffect(() => {
-		const fetchTelephones = async () => {
-			const data = await getAllTelephones();
-			setTelephones(data);
-		};
-		fetchTelephones();
-	}, []);
+	if (isLoading) {
+		return <div>...loading</div>;
+	}
 
 	const renderTelephones = () => {
-		return telephones
-			.slice(0, 7)
-			.map((telephone, index) => (
-				<Product
-					key={index}
-					_id={telephone._id}
-					picture={telephone.picture}
-					name={telephone.name}
-					price={telephone.price}
-					amount={telephone.amount}
-					product={telephone}
-					productType={"telephone"}
-				/>
-			));
+		return data.map((telephone, index) => (
+			<Product
+				key={index}
+				_id={telephone._id}
+				picture={telephone.picture}
+				name={telephone.name}
+				price={telephone.price}
+				amount={telephone.amount}
+				product={telephone}
+				productType={"telephone"}
+			/>
+		));
 	};
 
 	return (
@@ -91,33 +45,43 @@ export const Home = () => {
 					<h2>ЗНИЖКА 30%</h2>
 					<h3>при покупці другого товару</h3>
 				</div>
-				<img src={banner} alt="banner" />
+				<img src={banner} alt='banner' />
 			</div>
 			<div className={styles.catalog}>
 				<h1>Каталог</h1>
-				<div onClick={() => navigate("/product/telephone")}>
-					<img src={telephone} alt="telephone" />
+				<div
+					className={styles.active}
+					onClick={() => navigate("/product/telephones")}
+				>
+					<img src={telephone} alt='telephone' />
 					<h2>Смартфони</h2>
 				</div>
-				<div onClick={() => navigate("/product/laptop")}>
-					<img src={notebook} alt="notebook" />
+				<div
+					className={styles.active}
+					onClick={() => navigate("/product/laptop")}
+				>
+					<img src={notebook} alt='notebook' />
 					<h2>Ноутбуки</h2>
 				</div>
 				<div style={{ cursor: "no-drop" }}>
-					<img src={pc} alt="computer" />
+					<img src={pc} alt='computer' />
 					<h2>Комп'ютери</h2>
+					<div className={styles.close}></div>
 				</div>
 				<div style={{ cursor: "no-drop" }}>
-					<img src={tv} alt="tv" />
+					<img src={tv} alt='tv' />
 					<h2>Телевізори</h2>
+					<div className={styles.close}></div>
 				</div>
 				<div style={{ cursor: "no-drop" }}>
-					<img src={tablet} alt="tablet" />
+					<img src={tablet} alt='tablet' />
 					<h2>Планшети</h2>
+					<div className={styles.close}></div>
 				</div>
 				<div style={{ cursor: "no-drop" }}>
-					<img src={musicColumn} alt="music column" />
+					<img src={musicColumn} alt='music column' />
 					<h2>Колонки</h2>
+					<div className={styles.close}></div>
 				</div>
 			</div>
 			<div className={styles.products}>

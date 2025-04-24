@@ -1,14 +1,17 @@
 import React from "react";
 import { Route, Routes } from "react-router-dom";
 import { AdminHome } from "./admin/pages/AdminHome/AdminHome";
-import { Login } from "./admin/pages/auth/Login/Login";
-import { Header } from "./components/Header/Header";
+import { Login as AdminLogin } from "./admin/pages/auth/Login/Login";
+import { Header } from "./components";
 import {
 	FullProductLaptop,
 	FullProductTelephone,
 	Home,
 	Laptops,
+	Login,
 	NotFound,
+	Profile,
+	Register,
 	Telephones,
 } from "./pages";
 
@@ -19,9 +22,8 @@ export const App = () => {
 		<>
 			{!isAdminRoute && <Header />}
 			<Routes>
-				{/* Общие маршруты */}
 				<Route path='/' element={<Home />} />
-				<Route path='/product/telephone' element={<Telephones />} />
+				<Route path='/product/telephones' element={<Telephones />} />
 				<Route
 					path='/product/telephone/:id'
 					element={<FullProductTelephone />}
@@ -29,11 +31,14 @@ export const App = () => {
 				<Route path='/product/laptop/:id' element={<FullProductLaptop />} />
 				<Route path='/product/laptop' element={<Laptops />} />
 
-				{/* Админ маршруты */}
-				<Route path='/admin/login' element={<Login />} />
+				<Route path='/profile' element={<Profile />} />
+
+				<Route path='/auth/login' element={<Login />} />
+				<Route path='/auth/register' element={<Register />} />
+
+				<Route path='/admin/login' element={<AdminLogin />} />
 				<Route path='/admin/*' element={<AdminHome />} />
 
-				{/* Маршрут для несуществующих страниц */}
 				<Route path='*' element={<NotFound />} />
 			</Routes>
 		</>

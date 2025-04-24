@@ -1,14 +1,27 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import styles from "./CatalogSideBar.module.scss";
 
-export const CatalogSideBar = ({ setFilters, productType }) => {
-	const [filters, setLocalFilters] = useState({
+export const CatalogSideBar = ({
+	setQueryFilters,
+	queryFilters,
+	productType,
+}) => {
+	const [filters, setFilters] = useState({
 		rom: null,
 		ram: null,
 		brand: null,
 		cores: null,
 		storage: null,
 	});
+
+	useEffect(() => {
+		if (queryFilters) {
+			setFilters(prev => ({
+				...prev,
+				...queryFilters,
+			}));
+		}
+	}, [queryFilters]);
 
 	const options = {
 		telephone: {
@@ -34,12 +47,17 @@ export const CatalogSideBar = ({ setFilters, productType }) => {
 	};
 
 	const handleCheckboxChange = (value, type) => {
-		setLocalFilters(prev => {
+		setFilters(prev => {
 			const updatedValue = prev[type] === value ? null : value;
-			const updatedFilters = { ...prev, [type]: updatedValue };
-			setFilters(updatedFilters);
-			return updatedFilters;
+			return { ...prev, [type]: updatedValue };
 		});
+	};
+
+	const applyFilters = () => {
+		const filteredQuery = Object.fromEntries(
+			Object.entries(filters).filter(([_, val]) => val !== null)
+		);
+		setQueryFilters(filteredQuery);
 	};
 
 	const removeFilters = () => {
@@ -47,8 +65,8 @@ export const CatalogSideBar = ({ setFilters, productType }) => {
 			(acc, key) => ({ ...acc, [key]: null }),
 			{}
 		);
-		setLocalFilters(resetFilters);
 		setFilters(resetFilters);
+		setQueryFilters({});
 	};
 
 	return (
@@ -61,7 +79,7 @@ export const CatalogSideBar = ({ setFilters, productType }) => {
 							{values.map(value => (
 								<li key={value}>
 									<input
-										type="checkbox"
+										type='checkbox'
 										id={`${filterType}-${value}`}
 										checked={filters[filterType] === value}
 										onChange={() => handleCheckboxChange(value, filterType)}
@@ -72,7 +90,11 @@ export const CatalogSideBar = ({ setFilters, productType }) => {
 						</ul>
 					</div>
 				))}
-			<div>
+
+			<div className={styles.actions}>
+				<p onClick={applyFilters} className={styles.applyButton}>
+					Застосувати фільтри
+				</p>
 				<p onClick={removeFilters} className={styles.clearFilters}>
 					Скинути фільтри
 				</p>

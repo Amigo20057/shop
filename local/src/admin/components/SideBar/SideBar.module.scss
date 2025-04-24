@@ -6,6 +6,9 @@
 	color: #fff;
 	display: flex;
 	flex-direction: column;
+	-webkit-box-shadow: 10px 1px 23px -7px rgba(0, 0, 0, 0.75);
+	-moz-box-shadow: 10px 1px 23px -7px rgba(0, 0, 0, 0.75);
+	box-shadow: 10px 1px 23px -7px rgba(0, 0, 0, 0.75);
 
 	h1 {
 		font-size: 30px;
@@ -26,6 +29,11 @@
 			a {
 				color: #fff;
 			}
+			transition: all 0.25s;
+		}
+
+		li:hover {
+			background-color: #3f5061;
 		}
 
 		li.active {

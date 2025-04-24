@@ -24,6 +24,7 @@ route.post("/login", async (req, res) => {
 		res.status(500).json({ message: err.message });
 	}
 });
+
 route.get("/me", AuthCheck, async (req, res) => {
 	try {
 		const userId = req._id;

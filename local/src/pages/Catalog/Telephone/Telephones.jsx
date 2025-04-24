@@ -1,65 +1,41 @@
 import { ChevronLeft } from "lucide-react";
-import React, { useCallback, useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { getAllTelephones } from "../../../Api/Telephones/TelephoneApi";
-import { CatalogSideBar } from "../../../components";
-import { Product } from "../../../components/Product/Product";
+import React, { useMemo } from "react";
+import { useNavigate, useSearchParams } from "react-router-dom";
+import { CatalogSideBar, Product } from "../../../components";
+import { useFilterPhone } from "../../../hooks/products/phones/useFilterPhone";
+import { usePhones } from "../../../hooks/products/phones/usePhones";
 import styles from "./Telephones.module.scss";
 
 export const Telephones = () => {
-	const [telephones, setTelephones] = useState([]);
-	const [filteredTelephones, setFilteredTelephones] = useState([]);
-	const [filters, setFilters] = useState({});
 	const navigate = useNavigate();
+	const [searchParams, setSearchParams] = useSearchParams();
 
-	const fetchTelephones = useCallback(async () => {
-		const data = await getAllTelephones();
-		setTelephones(data);
-		setFilteredTelephones(data);
-	}, []);
+	// Преобразуем searchParams в обычный объект
+	const queryFilters = useMemo(() => {
+		const entries = {};
+		for (const [key, value] of searchParams.entries()) {
+			entries[key] = value;
+		}
+		return Object.keys(entries).length > 0 ? entries : null;
+	}, [searchParams]);
 
-	useEffect(() => {
-		fetchTelephones();
-	}, [fetchTelephones]);
+	const { data: allPhones, isLoading: isAllLoading } = usePhones(
+		null,
+		!queryFilters
+	);
 
-	useEffect(() => {
-		const filtered = telephones.filter(telephone => {
-			if (
-				filters.ram &&
-				telephone.characteristics.ram.replace(/\s+/g, "").toLowerCase() !==
-					filters.ram.replace(/\s+/g, "").toLowerCase()
-			) {
-				return false;
-			}
+	const { data: filteredPhones, isLoading: isFilteredLoading } =
+		useFilterPhone(queryFilters);
 
-			if (
-				filters.rom &&
-				telephone.characteristics.rom.replace(/\s+/g, "").toLowerCase() !==
-					filters.rom.replace(/\s+/g, "").toLowerCase()
-			) {
-				return false;
-			}
+	const isLoading = queryFilters ? isFilteredLoading : isAllLoading;
+	const phones = queryFilters ? filteredPhones : allPhones;
 
-			if (filters.brand && telephone.name.split(" ")[0] !== filters.brand) {
-				return false;
-			}
-
-			if (
-				filters.cores &&
-				Number(telephone.characteristics.cores) !== Number(filters.cores)
-			) {
-				return false;
-			}
-
-			return true;
-		});
-		setFilteredTelephones(filtered);
-		console.log("Current filters:", filters);
-		console.log("All telephones:", telephones);
-	}, [filters, telephones]);
+	if (isLoading) {
+		return <div>...loading</div>;
+	}
 
 	const renderTelephones = () => {
-		return filteredTelephones.map((telephone, index) => (
+		return phones?.map((telephone, index) => (
 			<Product
 				key={index}
 				_id={telephone._id}
@@ -79,7 +55,13 @@ export const Telephones = () => {
 				<ChevronLeft size={40} />
 				<h1>Смартфони</h1>
 			</div>
-			<CatalogSideBar setFilters={setFilters} productType={"telephone"} />
+
+			<CatalogSideBar
+				setQueryFilters={filters => setSearchParams(filters)}
+				queryFilters={queryFilters}
+				productType={"telephone"}
+			/>
+
 			<div className={styles.product}>{renderTelephones()}</div>
 		</div>
 	);

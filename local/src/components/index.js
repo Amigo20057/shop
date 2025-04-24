@@ -1,5 +1,5 @@
-import { CatalogSideBar } from "./CatalogSideBar/CatalogSideBar";
-import { Header } from "./Header/Header";
-import { Product } from "./Product/Product";
+import { CatalogSideBar } from "./catalogSideBar/CatalogSideBar";
+import { Header } from "./header/Header";
+import { Product } from "./product/Product";
 
 export { CatalogSideBar, Header, Product };

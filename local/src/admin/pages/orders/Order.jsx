@@ -62,8 +62,8 @@ export const Order = () => {
 
 	return (
 		<div className={styles.order}>
-			<h1>Усі замовлення</h1>
 			<div className={styles.container}>
+				<h1>Усі замовлення</h1>
 				<div className={styles.content}>
 					<ul>{renderOrders()}</ul>
 				</div>

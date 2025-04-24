@@ -71,9 +71,9 @@ export const Basket = ({ isOpenBasket, setIsOpenBasket }) => {
 					<img
 						src={
 							product.productType === "laptop"
-								? `http://localhost:4444/laptops/${product.picture}`
+								? `http://localhost:4000/laptops/${product.picture}`
 								: product.productType === "telephone"
-								? `http://localhost:4444/telephones/${product.picture}`
+								? `http://localhost:4000/phone/pictures/${product.picture}`
 								: ""
 						}
 						alt={product.name}
@@ -114,9 +114,9 @@ export const Basket = ({ isOpenBasket, setIsOpenBasket }) => {
 				{products.length !== 0 && (
 					<div className={styles.buyProducts}>
 						<input
-							type="email"
-							id="email"
-							placeholder="email"
+							type='email'
+							id='email'
+							placeholder='email'
 							onChange={e => setEmail(e.target.value)}
 						/>
 						<button onClick={() => createOrder()}>Замовити</button>

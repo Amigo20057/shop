@@ -1,16 +1,14 @@
 import { ChevronLeft } from "lucide-react";
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { useProductStore } from "../../Api/store/store";
-import { getOneTelephones } from "../../Api/Telephones/TelephoneApi";
+import { useProduct } from "../../hooks/products/useProduct";
 import styles from "./FullProductTelephone.module.scss";
 
 export const FullProductTelephone = () => {
-	const addToBasket = useProductStore(state => state.addToBasket);
-	const products = useProductStore(state => state.products);
-	const [telephone, setTelephone] = useState(null);
 	const { id } = useParams();
+	const { data, isLoading } = useProduct(id);
 	const navigate = useNavigate();
+	// const addToBasket = useProductStore(state => state.addToBasket);
 
 	const formatPrice = new Intl.NumberFormat("uk-UA", {
 		style: "currency",
@@ -18,14 +16,6 @@ export const FullProductTelephone = () => {
 		minimumFractionDigits: 0,
 		maximumFractionDigits: 0,
 	}).format;
-
-	useEffect(() => {
-		const fetchTelephone = async () => {
-			const data = await getOneTelephones(id);
-			setTelephone(data);
-		};
-		if (id) fetchTelephone();
-	}, [id]);
 
 	const handleAddToBasket = () => {
 		const _id = telephone._id;
@@ -36,9 +26,9 @@ export const FullProductTelephone = () => {
 		addToBasket({ _id, picture, name, price, productType });
 	};
 
-	console.log(telephone);
+	console.log(data);
 
-	if (!telephone) {
+	if (isLoading) {
 		return <p>Loading...</p>;
 	}
 	return (
@@ -49,39 +39,23 @@ export const FullProductTelephone = () => {
 			</div>
 			<div className={styles.contentInfo}>
 				<img
-					src={`http://localhost:4444/telephones/${telephone.picture}`}
-					alt={telephone.name}
+					src={`http://localhost:4000/phone/pictures/${data.picture}`}
+					alt={data.name}
 				/>
 				<div className={styles.info}>
-					<h1>{telephone.name}</h1>
+					<h1>{data.name}</h1>
 					<h3>Характеристики: </h3>
-					<p>
-						Екран:_________________________________{" "}
-						{telephone.characteristics.screen}
-					</p>
-					<p>
-						Кількість ядер:________________________{" "}
-						{telephone.characteristics.cores}
-					</p>
-					<p>
-						Потужність блоку живлення:_________{" "}
-						{telephone.characteristics.power}
-					</p>
-					<p>
-						Оперативна пам'ять (RAM):___________ {telephone.characteristics.ram}
-					</p>
-					<p>
-						Вбудована пам'ять (ROM):____________ {telephone.characteristics.rom}
-					</p>
-					<p>
-						Основная камера МПикс:_____________{" "}
-						{telephone.characteristics.camera}
-					</p>
+					<p>Екран:_________________________________ {data.screen}</p>
+					<p>Кількість ядер:________________________ {data.cores}</p>
+					<p>Потужність блоку живлення:_________ {data.battery}</p>
+					<p>Оперативна пам'ять (RAM):___________ {data.ram}</p>
+					<p>Вбудована пам'ять (ROM):____________ {data.rom}</p>
+					<p>Основная камера МПикс:_____________ {data.camera}</p>
 				</div>
 				<div className={styles.toBasket}>
 					<div>
-						<h1>{formatPrice(telephone.price)}</h1>
-						{telephone.amount <= 0 ? (
+						<h1>{formatPrice(data.price)}</h1>
+						{data.amount <= 0 ? (
 							<button className={styles.notAvailable}>Немає в наявності</button>
 						) : (
 							<button onClick={handleAddToBasket}>У кошик</button>

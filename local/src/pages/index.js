@@ -1,15 +1,21 @@
-import { Laptops } from "./Catalog/Laptop/Laptops";
-import { Telephones } from "./Catalog/Telephone/Telephones";
-import { FullProductLaptop } from "./FullProductLaptop/FullProductLaptop";
-import { FullProductTelephone } from "./FullProductTelephone/FullProductTelephone";
-import { Home } from "./Home/Home";
+import { Login } from "./auth/login/Login";
+import { Register } from "./auth/register/Register";
+import { Laptops } from "./catalog/laptop/Laptops";
+import { Telephones } from "./catalog/telephone/Telephones";
+import { FullProductLaptop } from "./fullProductLaptop/FullProductLaptop";
+import { FullProductTelephone } from "./fullProductTelephone/FullProductTelephone";
+import { Home } from "./home/Home";
 import { NotFound } from "./NotFound";
+import { Profile } from "./profile/Profile";
 
 export {
 	FullProductLaptop,
 	FullProductTelephone,
 	Home,
 	Laptops,
+	Login,
 	NotFound,
+	Profile,
+	Register,
 	Telephones,
 };

@@ -3,12 +3,11 @@ import { Navigate, Route, Routes } from "react-router-dom";
 import { checkAuth } from "../../../Api/Auth/AuthApi";
 import { SideBar } from "../../components/SideBar/SideBar";
 
-import { Laptop } from "../laptops/Laptop";
 import { Order } from "../orders/Order";
-import { Telephone } from "../telephones/Telephone";
 
 import { NotFound } from "../../../pages";
 
+import { Product } from "../product/Product";
 import styles from "./adminHome.module.scss";
 
 export const AdminHome = () => {
@@ -43,12 +42,13 @@ export const AdminHome = () => {
 				setActiveBtnOptions={setActiveBtnOptions}
 			/>
 			<Routes>
-				{/* Вложенные маршруты */}
 				<Route path='/orders' element={<Order />} />
-				<Route path='/telephones' element={<Telephone />} />
-				<Route path='/laptops' element={<Laptop />} />
+				<Route
+					path='/telephones'
+					element={<Product productType={"telephones"} />}
+				/>
+				<Route path='/laptops' element={<Product productType={"laptops"} />} />
 				<Route path='/' element={<Navigate to='/admin/orders' />} />
-				{/* Обработка несуществующих маршрутов */}
 				<Route path='*' element={<NotFound />} />
 			</Routes>
 		</div>

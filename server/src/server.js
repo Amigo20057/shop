@@ -29,7 +29,7 @@ app.use(
 );
 
 mongoose
-	.connect(process.env.DATABASE)
+	.connect(process.env.DATABASE_URL)
 	.then(() => {
 		console.log("DB OK");
 	})
