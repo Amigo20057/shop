@@ -4,10 +4,8 @@ import { AdminHome } from "./admin/pages/AdminHome/AdminHome";
 import { Login as AdminLogin } from "./admin/pages/auth/Login/Login";
 import { Header } from "./components";
 import {
-	FullProductLaptop,
 	FullProductTelephone,
 	Home,
-	Laptops,
 	Login,
 	NotFound,
 	Profile,
@@ -34,8 +32,6 @@ export const App = () => {
 					path='/product/telephone/:id'
 					element={<FullProductTelephone />}
 				/>
-				<Route path='/product/laptop/:id' element={<FullProductLaptop />} />
-				<Route path='/product/laptop' element={<Laptops />} />
 
 				<Route path='/create-order' element={<Order />} />
 

@@ -1,4 +1,3 @@
-import Laptop from "./model/laptop.model.js";
 import Phone from "./model/phone.model.js";
 import Product from "./model/product.model.js";
 
@@ -8,10 +7,6 @@ export async function findProductById(productId) {
 
 export async function findPhoneByName(name) {
 	return await Phone.findOne({ name: name });
-}
-
-export async function findLaptopByName(name) {
-	return await Laptop.findOne({ name: name });
 }
 
 export async function findAllProductsByCategory(category, limit = null) {
@@ -43,26 +38,6 @@ export async function createPhone(phone) {
 	} else {
 		await Phone.updateOne({ _id: phoneExists._id }, { $inc: { amount: 1 } });
 		return await Phone.findById(phoneExists._id);
-	}
-}
-
-export async function createLaptop(laptop) {
-	const laptopExists = await findLaptopByName(laptop.name);
-	if (!laptopExists) {
-		const doc = new Laptop({
-			name: laptop.name,
-			price: laptop.price,
-			brand: laptop.brand,
-			cpu: laptop.cpu,
-			ram: laptop.ram,
-			storage: laptop.storage,
-			screenSize: laptop.screenSize,
-			amount: 1,
-		});
-		return await doc.save();
-	} else {
-		await Laptop.updateOne({ _id: laptopExists._id }, { $inc: { amount: 1 } });
-		return await Laptop.findById(laptopExists._id);
 	}
 }
 

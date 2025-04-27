@@ -60,12 +60,10 @@ export const Home = () => {
 					<img src={telephone} alt='telephone' />
 					<h2>Смартфони</h2>
 				</div>
-				<div
-					className={styles.active}
-					onClick={() => navigate("/product/laptop")}
-				>
+				<div style={{ cursor: "no-drop" }}>
 					<img src={notebook} alt='notebook' />
 					<h2>Ноутбуки</h2>
+					<div className={styles.close}></div>
 				</div>
 				<div style={{ cursor: "no-drop" }}>
 					<img src={pc} alt='computer' />
