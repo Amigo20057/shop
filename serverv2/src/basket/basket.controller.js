@@ -1,7 +1,12 @@
 import { Router } from "express";
 import { AuthCheck } from "../utils/auth-check.middleware.js";
 import { logger } from "../utils/logger.js";
-import { addToBasket, getBasket, removeFromBasket } from "./basket.service.js";
+import {
+	addToBasket,
+	getBasket,
+	removeFromBasket,
+	syncBasket,
+} from "./basket.service.js";
 
 const route = Router();
 
@@ -23,6 +28,20 @@ route.post("/", AuthCheck, async (req, res) => {
 		const { productId, amount } = req.body;
 		const basket = await addToBasket(req._id, productId, amount);
 		res.status(200).json(basket);
+	} catch (error) {
+		logger.error(error);
+		res.status(500).json({
+			message: "Error add to basket",
+			error: error.message,
+		});
+	}
+});
+
+route.post("/sync-basket", AuthCheck, async (req, res) => {
+	try {
+		const userId = req._id;
+		await syncBasket(userId, req.body.items);
+		res.status(200).json({ success: true });
 	} catch (error) {
 		logger.error(error);
 		res.status(500).json({

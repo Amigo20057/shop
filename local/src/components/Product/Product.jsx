@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useProductStore } from "../../Api/store/store";
-
 import styles from "./Product.module.scss";
 
 export const Product = ({

@@ -7,7 +7,6 @@ import { icon_basket, icon_profile, icon_search } from "./assets";
 export const Header = () => {
 	const [isOpenBasket, setIsOpenBasket] = useState(false);
 	const [isSearch, setIsSearch] = useState(true);
-	console.log(isOpenBasket);
 
 	return (
 		<div className={styles.header}>
@@ -20,10 +19,6 @@ export const Header = () => {
 			</div>
 			{/* {isSearch && <div className={styles.searchProduct}>{12323}</div>} */}
 			<div className={styles.tabBar}>
-				{/* <div className={styles.catalog}>
-					<img src="icon_catalog.png" alt="catalog" />
-					<p>Каталог</p>
-				</div> */}
 				<div
 					className={styles.basket}
 					onClick={() => setIsOpenBasket(!isOpenBasket)}
@@ -33,7 +28,7 @@ export const Header = () => {
 				</div>
 				<div
 					className={styles.profile}
-					onClick={() => (window.location.href = "/profile")}
+					onClick={() => (window.location.href = "/profile/orders")}
 				>
 					<img src={icon_profile} alt='profile' />
 					<p>Профіль</p>

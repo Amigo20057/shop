@@ -1,8 +1,8 @@
 import { ChevronLeft } from "lucide-react";
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { getOneLaptop } from "../../Api/Laptops/LaptopApi";
-import { useProductStore } from "../../Api/store/store";
+import { getOneLaptop } from "../../../Api/Laptops/LaptopApi";
+import { useProductStore } from "../../../Api/store/store";
 import styles from "./FullProductLaptop.module.scss";
 
 export const FullProductLaptop = () => {
@@ -35,8 +35,6 @@ export const FullProductLaptop = () => {
 		const productType = "laptop";
 		addToBasket({ _id, picture, name, price, productType });
 	};
-
-	// console.log(laptop);
 
 	if (!laptop) {
 		return <p>Loading...</p>;

@@ -53,8 +53,6 @@ export const Laptops = () => {
 			return true;
 		});
 		setFilteredLaptops(filtered);
-		console.log("Current filters:", filters);
-		console.log("All laptops:", laptops);
 	}, [filters, laptops]);
 
 	const renderLaptops = () => {
@@ -74,7 +72,7 @@ export const Laptops = () => {
 
 	return (
 		<div className={styles.Products}>
-			<div onClick={() => navigate(-1)} className={styles.back}>
+			<div onClick={() => navigate("/")} className={styles.back}>
 				<ChevronLeft size={40} />
 				<h1>Ноутбуки</h1>
 			</div>

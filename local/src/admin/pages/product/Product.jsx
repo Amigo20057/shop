@@ -60,8 +60,6 @@ export const Product = ({ productType }) => {
 		));
 	};
 
-	console.log(products);
-
 	return (
 		<div className={styles.product}>
 			<div className={styles.container}>
