@@ -1,14 +1,14 @@
 import { ChevronLeft } from "lucide-react";
 import React from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { useProduct } from "../../hooks/products/useProduct";
+import { ClipLoader } from "react-spinners";
+import { useProduct } from "../../../hooks/products/useProduct";
 import styles from "./FullProductTelephone.module.scss";
 
 export const FullProductTelephone = () => {
 	const { id } = useParams();
 	const { data, isLoading } = useProduct(id);
 	const navigate = useNavigate();
-	// const addToBasket = useProductStore(state => state.addToBasket);
 
 	const formatPrice = new Intl.NumberFormat("uk-UA", {
 		style: "currency",
@@ -26,11 +26,14 @@ export const FullProductTelephone = () => {
 		addToBasket({ _id, picture, name, price, productType });
 	};
 
-	console.log(data);
-
 	if (isLoading) {
-		return <p>Loading...</p>;
+		return (
+			<div className={styles.loadingContainer}>
+				<ClipLoader color='#95a3fa' loading={isLoading} size={30} />
+			</div>
+		);
 	}
+
 	return (
 		<div className={styles.FullProduct}>
 			<div onClick={() => navigate(-1)} className={styles.back}>

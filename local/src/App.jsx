@@ -4,23 +4,27 @@ import { AdminHome } from "./admin/pages/AdminHome/AdminHome";
 import { Login as AdminLogin } from "./admin/pages/auth/Login/Login";
 import { Header } from "./components";
 import {
-	FullProductLaptop,
 	FullProductTelephone,
 	Home,
-	Laptops,
 	Login,
 	NotFound,
 	Profile,
 	Register,
 	Telephones,
 } from "./pages";
+import { Order } from "./pages/order/Order";
+import { ProfileBasket } from "./pages/profile/ProfileBasket";
+import { ProfileOrders } from "./pages/profile/ProfileOrders";
 
 export const App = () => {
 	const isAdminRoute = location.pathname.startsWith("/admin");
+	const isHideHeader = ["/auth/login", "/auth/register"].includes(
+		location.pathname
+	);
 
 	return (
 		<>
-			{!isAdminRoute && <Header />}
+			{!isAdminRoute && !isHideHeader && <Header />}
 			<Routes>
 				<Route path='/' element={<Home />} />
 				<Route path='/product/telephones' element={<Telephones />} />
@@ -28,10 +32,13 @@ export const App = () => {
 					path='/product/telephone/:id'
 					element={<FullProductTelephone />}
 				/>
-				<Route path='/product/laptop/:id' element={<FullProductLaptop />} />
-				<Route path='/product/laptop' element={<Laptops />} />
 
-				<Route path='/profile' element={<Profile />} />
+				<Route path='/create-order' element={<Order />} />
+
+				<Route path='/profile' element={<Profile />}>
+					<Route path='orders' element={<ProfileOrders />} />
+					<Route path='basket' element={<ProfileBasket />} />
+				</Route>
 
 				<Route path='/auth/login' element={<Login />} />
 				<Route path='/auth/register' element={<Register />} />

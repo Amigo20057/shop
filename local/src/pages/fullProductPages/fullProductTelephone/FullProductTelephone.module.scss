@@ -27,11 +27,6 @@
 	margin-top: 330px;
 	display: flex;
 
-	img {
-		width: 675px;
-		height: 355px;
-	}
-
 	.info {
 		margin-left: 150px;
 		width: 26%;
@@ -97,4 +92,11 @@
 			}
 		}
 	}
+}
+
+.loadingContainer {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	height: 100vh;
 }

@@ -1,12 +1,8 @@
 import { Router } from "express";
 import { AdminAuthCheck } from "../utils/admin-auth-check.middleware.js";
 import { logger } from "../utils/logger.js";
+import { uploadPhonesPictures } from "../utils/multer.js";
 import {
-	uploadLaptopsPictures,
-	uploadPhonesPictures,
-} from "../utils/multer.js";
-import {
-	createLaptop,
 	createPhone,
 	filterPhones,
 	findAllProductsByCategory,
@@ -36,23 +32,6 @@ route.post(
 	}
 );
 
-route.post(
-	"/create-laptop",
-	AdminAuthCheck,
-	uploadLaptopsPictures.single("picture"),
-	async (req, res) => {
-		try {
-			const laptop = await createLaptop(req.body);
-			res.status(201).json(laptop);
-		} catch (error) {
-			logger.error(error);
-			res
-				.status(500)
-				.json({ message: "Error create laptop", error: error.message });
-		}
-	}
-);
-
 route.get("/by-id/:productId", async (req, res) => {
 	try {
 		const productId = req.params.productId;
@@ -76,18 +55,6 @@ route.get("/phones", async (req, res) => {
 		res
 			.status(500)
 			.json({ message: "Error get telephones", error: error.message });
-	}
-});
-
-route.get("/laptops", async (req, res) => {
-	try {
-		const laptops = await findAllProductsByCategory("laptop");
-		res.status(200).json(laptops);
-	} catch (error) {
-		logger.error(error);
-		res
-			.status(500)
-			.json({ message: "Error get laptops", error: error.message });
 	}
 });
 

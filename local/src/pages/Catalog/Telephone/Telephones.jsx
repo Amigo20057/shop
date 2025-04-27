@@ -1,6 +1,7 @@
 import { ChevronLeft } from "lucide-react";
 import React, { useMemo } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
+import { ClipLoader } from "react-spinners";
 import { CatalogSideBar, Product } from "../../../components";
 import { useFilterPhone } from "../../../hooks/products/phones/useFilterPhone";
 import { usePhones } from "../../../hooks/products/phones/usePhones";
@@ -10,7 +11,6 @@ export const Telephones = () => {
 	const navigate = useNavigate();
 	const [searchParams, setSearchParams] = useSearchParams();
 
-	// Преобразуем searchParams в обычный объект
 	const queryFilters = useMemo(() => {
 		const entries = {};
 		for (const [key, value] of searchParams.entries()) {
@@ -31,7 +31,11 @@ export const Telephones = () => {
 	const phones = queryFilters ? filteredPhones : allPhones;
 
 	if (isLoading) {
-		return <div>...loading</div>;
+		return (
+			<div className={styles.loadingContainer}>
+				<ClipLoader color='#95a3fa' loading={isLoading} size={30} />
+			</div>
+		);
 	}
 
 	const renderTelephones = () => {
@@ -51,7 +55,7 @@ export const Telephones = () => {
 
 	return (
 		<div className={styles.Products}>
-			<div onClick={() => navigate(-1)} className={styles.back}>
+			<div onClick={() => navigate("/")} className={styles.back}>
 				<ChevronLeft size={40} />
 				<h1>Смартфони</h1>
 			</div>

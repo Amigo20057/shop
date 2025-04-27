@@ -1,3 +1,4 @@
+import mongoose from "mongoose";
 import Basket from "./model/basket.model.js";
 
 async function findBasketByUserId(userId) {
@@ -5,10 +6,58 @@ async function findBasketByUserId(userId) {
 }
 
 export async function getBasket(userId) {
-	let basket = await findBasketByUserId(userId);
+	let basket = await Basket.findOne({ userId }).populate("items.productId");
 	if (!basket) {
 		basket = await Basket.create({ userId, items: [] });
 	}
+	let products = [];
+
+	for (const item of basket.items) {
+		const product = item.productId;
+		if (product) {
+			let tempObject = {
+				name: product.name,
+				picture: product.picture,
+				price: product.price,
+				amount: item.amount,
+			};
+			products.push(tempObject);
+		}
+	}
+
+	return products;
+}
+
+export async function syncBasket(userId, items) {
+	if (!userId || !Array.isArray(items)) {
+		throw new Error("Invalid input data");
+	}
+
+	let basket = await Basket.findOne({ userId });
+	if (!basket) {
+		basket = await Basket.create({ userId, items: [] });
+	}
+
+	for (const incomingItem of items) {
+		const existingItem = basket.items.find(
+			item => item.productId.toString() === incomingItem.productId
+		);
+
+		if (existingItem) {
+			if (incomingItem.amount > existingItem.amount) {
+				existingItem.amount = incomingItem.amount;
+			}
+		} else {
+			basket.items.push({
+				productId: new mongoose.Types.ObjectId(incomingItem.productId),
+				amount: incomingItem.amount || 1,
+			});
+		}
+	}
+
+	basket.updatedAt = new Date();
+	await basket.save();
+
 	return basket;
 }
 

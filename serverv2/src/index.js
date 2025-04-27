@@ -7,6 +7,7 @@ import mongoose from "mongoose";
 import path from "path";
 import { fileURLToPath } from "url";
 import { basketRouter } from "./basket/basket.controller.js";
+import { orderRouter } from "./order/order.controller.js";
 import { productRouter } from "./product/product.controller.js";
 import { userRouter } from "./user/user.controller.js";
 import { logger } from "./utils/logger.js";
@@ -38,6 +39,7 @@ app.use(
 app.use("/user", userRouter);
 app.use("/products", productRouter);
 app.use("/basket", basketRouter);
+app.use("/orders", orderRouter);
 
 mongoose
 	.connect(process.env.DATABASE_URL)

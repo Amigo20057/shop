@@ -1,5 +1,6 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
+import { ClipLoader } from "react-spinners";
 import { Product } from "../../components/product/Product";
 import { usePhones } from "../../hooks/products/phones/usePhones";
 import {
@@ -16,10 +17,13 @@ import styles from "./Home.module.scss";
 export const Home = () => {
 	const navigate = useNavigate();
 	const { data, isLoading } = usePhones(7);
-	console.log(data);
 
 	if (isLoading) {
-		return <div>...loading</div>;
+		return (
+			<div className={styles.loadingContainer}>
+				<ClipLoader color='#95a3fa' loading={isLoading} size={30} />
+			</div>
+		);
 	}
 
 	const renderTelephones = () => {
@@ -45,7 +49,7 @@ export const Home = () => {
 					<h2>ЗНИЖКА 30%</h2>
 					<h3>при покупці другого товару</h3>
 				</div>
-				<img src={banner} alt='banner' />
+				<img src={banner} alt='banner' loading='lazy' />
 			</div>
 			<div className={styles.catalog}>
 				<h1>Каталог</h1>
@@ -56,12 +60,10 @@ export const Home = () => {
 					<img src={telephone} alt='telephone' />
 					<h2>Смартфони</h2>
 				</div>
-				<div
-					className={styles.active}
-					onClick={() => navigate("/product/laptop")}
-				>
+				<div style={{ cursor: "no-drop" }}>
 					<img src={notebook} alt='notebook' />
 					<h2>Ноутбуки</h2>
+					<div className={styles.close}></div>
 				</div>
 				<div style={{ cursor: "no-drop" }}>
 					<img src={pc} alt='computer' />

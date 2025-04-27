@@ -1,3 +1,6 @@
+import { Outlet } from "react-router-dom";
+import { ClipLoader } from "react-spinners";
+import { ProfileSideBar } from "../../components";
 import { useProfile } from "../../hooks/user/useProfile";
 import styles from "./Profile.module.scss";
 
@@ -24,14 +27,24 @@ export const Profile = () => {
 	};
 
 	if (isLoading) {
-		return <div>...loading</div>;
+		return (
+			<div className={styles.loadingContainer}>
+				<ClipLoader color='#95a3fa' loading={isLoading} size={30} />
+			</div>
+		);
 	}
 
-	console.log(data);
 	return (
 		<div className={styles.profile}>
-			{data.firstName}
-			<button onClick={logout}>Logout</button>
+			<ProfileSideBar
+				firstName={data.firstName}
+				lastName={data.lastName}
+				email={data.email}
+			/>
+			{/* <div className={styles.content}>
+				<button onClick={logout}>Logout</button>
+			</div> */}
+			<Outlet />
 		</div>
 	);
 };

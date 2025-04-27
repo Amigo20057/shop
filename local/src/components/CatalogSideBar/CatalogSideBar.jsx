@@ -30,12 +30,6 @@ export const CatalogSideBar = ({
 			brand: ["Apple", "Honor", "Samsung", "Huawei", "Xiaomi"],
 			cores: ["4", "6", "8"],
 		},
-		laptop: {
-			ram: ["4 ГБ", "8 ГБ", "16 ГБ"],
-			storage: ["126 ГБ", "256 ГБ", "500 ГБ", "1 ТБ"],
-			brand: ["Apple", "Honor", "Samsung", "Huawei", "Xiaomi"],
-			cores: ["4", "8", "12"],
-		},
 	};
 
 	const filterLabels = {

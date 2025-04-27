@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useProductStore } from "../../Api/store/store";
-
 import styles from "./Product.module.scss";
 
 export const Product = ({
@@ -69,11 +68,7 @@ export const Product = ({
 						? styles.laptopImg
 						: ""
 				}
-				// width={169}
-				// height={216}
 				onClick={() => navigateToProduct(_id)}
-				// src={`http://localhost:4444/laptops/${picture}`}
-				// src={`http://localhost:4444/telephones/${picture}`}
 				src={pictureSrc}
 				alt={name}
 			/>
