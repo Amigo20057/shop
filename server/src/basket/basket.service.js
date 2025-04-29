@@ -16,6 +16,7 @@ export async function getBasket(userId) {
 		const product = item.productId;
 		if (product) {
 			let tempObject = {
+				id: product._id,
 				name: product.name,
 				picture: product.picture,
 				price: product.price,

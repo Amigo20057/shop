@@ -1,24 +1,8 @@
-import { useQuery } from "@tanstack/react-query";
-import axios from "axios";
+import { useBasket } from "../../hooks/basket/useBasket";
 import styles from "./Profile.module.scss";
 
-const token = window.localStorage.getItem("token");
-
-const getBasket = async token => {
-	return await axios.get("http://localhost:4000/basket", {
-		headers: {
-			Authorization: `Bearer ${token}`,
-		},
-	});
-};
-
 export const ProfileBasket = () => {
-	const { data, isSuccess, status } = useQuery({
-		queryKey: ["profile-basket"],
-		queryFn: () => getBasket(token),
-		select: data => data.data,
-		enabled: !!token,
-	});
+	const { data, isSuccess, status } = useBasket();
 
 	if (!data || !isSuccess || status === "error") {
 		return <div>Кошик порожній</div>;
