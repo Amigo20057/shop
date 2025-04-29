@@ -1,11 +1,13 @@
 import { useMutation } from "@tanstack/react-query";
 import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import axios from "../../../Api/axios";
 import { useProductStore } from "../../../Api/store/store";
 import { useProfile } from "../../../hooks/user/useProfile";
 import styles from "./Basket.module.scss";
 
 export const Basket = ({ isOpenBasket, setIsOpenBasket }) => {
+	const navigate = useNavigate();
 	const products = useProductStore(state => state.products);
 	const token = window.localStorage.getItem("token");
 	const { data, isLoading, status } = useProfile(token);
@@ -177,7 +179,14 @@ export const Basket = ({ isOpenBasket, setIsOpenBasket }) => {
 							</>
 						) : (
 							<>
-								<button onClick={() => createOrder()}>Замовити</button>
+								<button
+									onClick={() => {
+										navigate("/create-order");
+										setIsOpenBasket(false);
+									}}
+								>
+									Замовити
+								</button>
 							</>
 						)}
 					</div>

@@ -26,7 +26,7 @@ export const Register = () => {
 		},
 		onSuccess: data => {
 			console.log("Register success", data);
-			window.location.href = "/profile";
+			window.location.href = "/profile/orders";
 		},
 		onError: error => {
 			console.log("Error register", error);

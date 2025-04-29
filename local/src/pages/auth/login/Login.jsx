@@ -25,7 +25,7 @@ export const Login = () => {
 		},
 		onSuccess: data => {
 			console.log("Login success", data);
-			window.location.href = "/profile";
+			window.location.href = "/profile/orders";
 		},
 		onError: error => {
 			console.error("Error login", error);
