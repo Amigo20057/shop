@@ -10,6 +10,11 @@ async function validatePassword(password, userExistsPassword) {
 	return await bcryptjs.compare(password, userExistsPassword);
 }
 
+async function checkIsUserAdmin(email) {
+	const user = await UserModel.findOne({ email });
+	return user?.role === "ADMIN";
+}
+
 async function findUserByEmail(email) {
 	return await UserModel.findOne({ email: email });
 }
@@ -56,9 +61,12 @@ export async function login(user) {
 	if (!isValidPassword) {
 		throw new Error("Wrong data");
 	}
+	const isAdmin = userExists.role === "ADMIN";
+
 	const token = jwt.sign(
 		{
 			_id: userExists._id,
+			role: userExists.role,
 		},
 		process.env.SECRET,
 		{
@@ -69,9 +77,37 @@ export async function login(user) {
 	return {
 		...userData,
 		token,
+		isAdmin,
 	};
 }
 
 export async function profile(id) {
 	return await findUserById(id);
+}
+
+export async function registerAdmin(user) {
+	const userExists = await findUserByEmail(user.email);
+	if (userExists) {
+		throw new Error("User exists");
+	}
+	user.password = await hashPassword(user.password);
+	const doc = new UserModel({
+		firstName: user.firstName,
+		lastName: user.lastName,
+		email: user.email,
+		password: user.password,
+		role: "ADMIN",
+	});
+	const newUser = await doc.save();
+	const token = jwt.sign(
+		{
+			_id: newUser._id,
+		},
+		process.env.SECRET,
+		{
+			expiresIn: "15d",
+		}
+	);
+	const { password, ...userData } = newUser._doc;
+	return { ...userData, token };
 }

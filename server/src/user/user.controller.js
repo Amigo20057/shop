@@ -25,6 +25,16 @@ route.post("/login", async (req, res) => {
 	}
 });
 
+route.post("/register-admin", async (req, res) => {
+	try {
+		const user = await register(req.body);
+		res.status(201).json(user);
+	} catch (error) {
+		console.log(error);
+		res.status(500).json({ message: "Error register", error: error.message });
+	}
+});
+
 route.get("/profile", AuthCheck, async (req, res) => {
 	try {
 		const user = await profile(req._id);

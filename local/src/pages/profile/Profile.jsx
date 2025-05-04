@@ -21,11 +21,6 @@ export const Profile = () => {
 		);
 	}
 
-	const logout = () => {
-		window.localStorage.removeItem("token");
-		window.location.reload();
-	};
-
 	if (isLoading) {
 		return (
 			<div className={styles.loadingContainer}>

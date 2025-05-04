@@ -1,7 +1,7 @@
 import React from "react";
 import { Route, Routes } from "react-router-dom";
-import { AdminHome } from "./admin/pages/AdminHome/AdminHome";
-import { Login as AdminLogin } from "./admin/pages/auth/Login/Login";
+import { AdminHome } from "./admin/pages/adminHome/AdminHome";
+import { Login as AdminLogin } from "./admin/pages/auth/Login";
 import { Header } from "./components";
 import {
 	FullProductTelephone,

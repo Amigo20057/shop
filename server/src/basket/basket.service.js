@@ -97,3 +97,31 @@ export async function removeFromBasket(userId, productId) {
 export async function clearBasket(userId) {
 	await Basket.findOneAndUpdate({ userId }, { items: [] });
 }
+
+export async function changeAmountProduct(userId, productId, method) {
+	const basket = await Basket.findOne({ userId });
+	if (!basket) throw new Error("Basket not found");
+
+	const item = basket.items.find(
+		item => item.productId.toString() === productId.toString()
+	);
+
+	if (!item) throw new Error("Product not found in basket");
+
+	if (method === "inc") {
+		item.amount += 1;
+	} else if (method === "dec") {
+		item.amount -= 1;
+		if (item.amount <= 0) {
+			basket.items = basket.items.filter(
+				i => i.productId.toString() !== productId.toString()
+			);
+		}
+	} else {
+		throw new Error("Invalid method parameter: must be 'inc' or 'dec'");
+	}
+
+	basket.updatedAt = new Date();
+	await basket.save();
+	return basket;
+}

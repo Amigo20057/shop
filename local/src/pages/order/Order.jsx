@@ -2,10 +2,15 @@ import { useMutation } from "@tanstack/react-query";
 import axios from "axios";
 import { useEffect } from "react";
 import { useForm } from "react-hook-form";
+import { useNavigate } from "react-router-dom";
 import { useBasket } from "../../hooks/basket/useBasket";
+import { useProductStore } from "../../zustand/store/store";
+
 import styles from "./Order.module.scss";
 
 export const Order = () => {
+	const navigate = useNavigate();
+	const clearBasket = useProductStore(state => state.clearBasket);
 	const token = window.localStorage.getItem("token");
 	const { data: basketData } = useBasket();
 	console.log(basketData);
@@ -45,8 +50,9 @@ export const Order = () => {
 				}
 			);
 		},
-		onSuccess: data => {
-			window.location.href = "/profile/orders";
+		onSuccess: () => {
+			clearBasket();
+			navigate("/profile/orders");
 		},
 		onError: error => {
 			if (axios.isAxiosError(error)) {
@@ -62,7 +68,7 @@ export const Order = () => {
 
 	const onSubmit = values => {
 		console.log(values);
-		// createOrderMutation.mutate(values);
+		createOrderMutation.mutate(values);
 	};
 
 	const renderBasketItems = () => {

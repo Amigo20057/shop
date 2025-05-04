@@ -52,3 +52,10 @@ export async function filterPhones(query) {
 	const phones = await Product.find(filter);
 	return phones;
 }
+
+export async function findProductsByName(name) {
+	return await Product.find({
+		type: "phone",
+		name: { $regex: name, $options: "i" },
+	});
+}

@@ -1,9 +1,9 @@
 import { useMutation } from "@tanstack/react-query";
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import axios from "../../../Api/axios";
-import { useProductStore } from "../../../Api/store/store";
 import { useProfile } from "../../../hooks/user/useProfile";
+import { useProductStore } from "../../../zustand/store/store";
+
 import styles from "./Basket.module.scss";
 
 export const Basket = ({ isOpenBasket, setIsOpenBasket }) => {

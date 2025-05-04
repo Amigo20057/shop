@@ -34,6 +34,18 @@ export const useProductStore = create(
 					}
 					return state;
 				}),
+			incrementAmount: productId =>
+				set(state => {
+					const productIndex = state.products.findIndex(
+						p => p._id === productId
+					);
+					if (productIndex !== -1) {
+						const updatedProducts = [...state.products];
+						updatedProducts[productIndex].amount += 1;
+						return { products: updatedProducts };
+					}
+					return state;
+				}),
 			clearBasket: () => {
 				set(() => ({
 					products: [],
@@ -43,7 +55,3 @@ export const useProductStore = create(
 		{ name: "product-storage" }
 	)
 );
-
-// export const AuthCheck = () => create((set)=>(
-
-// ))

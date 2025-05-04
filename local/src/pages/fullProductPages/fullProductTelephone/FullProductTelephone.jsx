@@ -3,10 +3,13 @@ import React from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { ClipLoader } from "react-spinners";
 import { useProduct } from "../../../hooks/products/useProduct";
+import { useProductStore } from "../../../zustand/store/store";
+
 import styles from "./FullProductTelephone.module.scss";
 
 export const FullProductTelephone = () => {
 	const { id } = useParams();
+	const addToBasket = useProductStore(state => state.addToBasket);
 	const { data, isLoading } = useProduct(id);
 	const navigate = useNavigate();
 
@@ -18,10 +21,10 @@ export const FullProductTelephone = () => {
 	}).format;
 
 	const handleAddToBasket = () => {
-		const _id = telephone._id;
-		const picture = telephone.picture;
-		const name = telephone.name;
-		const price = telephone.price;
+		const _id = data._id;
+		const picture = data.picture;
+		const name = data.name;
+		const price = data.price;
 		const productType = "telephone";
 		addToBasket({ _id, picture, name, price, productType });
 	};

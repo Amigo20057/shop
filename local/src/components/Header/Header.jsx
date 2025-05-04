@@ -1,12 +1,62 @@
-import React, { useState } from "react";
+import axios from "axios";
+import { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import { Basket } from "../../ui/modals/Basket/Basket";
-import styles from "./Header.module.scss";
 import { icon_basket, icon_profile, icon_search } from "./assets";
+import styles from "./Header.module.scss";
+
+const getProductByName = async name => {
+	const response = await axios.get("http://localhost:4000/products/search", {
+		params: { name },
+	});
+	return response.data;
+};
 
 export const Header = () => {
+	const [querySearch, setQuerySearch] = useState("");
+	const [searchResult, setSearchResult] = useState(null);
 	const [isOpenBasket, setIsOpenBasket] = useState(false);
-	const [isSearch, setIsSearch] = useState(true);
+	const [isSearch, setIsSearch] = useState(false);
+	const searchRef = useRef(null);
+
+	useEffect(() => {
+		const handleClickOutside = e => {
+			if (searchRef.current && !searchRef.current.contains(e.target)) {
+				setIsSearch(false);
+			}
+		};
+		document.addEventListener("mousedown", handleClickOutside);
+		return () => {
+			document.removeEventListener("mousedown", handleClickOutside);
+		};
+	}, []);
+
+	useEffect(() => {
+		if (querySearch.trim().length === 0) {
+			setIsSearch(false);
+		}
+	});
+
+	const handleSearch = async () => {
+		if (querySearch.trim().length > 0) {
+			try {
+				const data = await getProductByName(querySearch);
+				setSearchResult(data);
+				setIsSearch(true);
+			} catch (error) {
+				console.error("Search error:", error);
+				setIsSearch(false);
+			}
+		}
+	};
+
+	console.log(searchResult);
+
+	const handleKeyDown = e => {
+		if (e.key === "Enter") {
+			handleSearch();
+		}
+	};
 
 	return (
 		<div className={styles.header}>
@@ -15,9 +65,32 @@ export const Header = () => {
 			</Link>
 			<div className={styles.search}>
 				<img src={icon_search} alt='search' />
-				<input type='text' placeholder='Пошук' />
+				<input
+					type='text'
+					placeholder='Пошук'
+					value={querySearch}
+					onChange={e => setQuerySearch(e.target.value)}
+					onKeyDown={handleKeyDown}
+				/>
 			</div>
-			{/* {isSearch && <div className={styles.searchProduct}>{12323}</div>} */}
+			{isSearch && searchResult?.length > 0 && (
+				<div className={styles.searchProduct} ref={searchRef}>
+					{searchResult.map(product => (
+						<Link
+							to={`/product/telephone/${product._id}`}
+							className={styles.searchItem}
+							key={product._id}
+							onClick={() => setIsSearch(false)}
+						>
+							<img
+								src={`http://localhost:4000/phone/pictures/${product.picture}`}
+								alt={product.name}
+							/>
+							<p>{product.name}</p>
+						</Link>
+					))}
+				</div>
+			)}
 			<div className={styles.tabBar}>
 				<div
 					className={styles.basket}

@@ -1,18 +1,21 @@
 import { List, ShoppingCart } from "lucide-react";
 import { useLocation, useNavigate } from "react-router-dom";
+import { useProductStore } from "../../zustand/store/store";
 import { icon_profile } from "../header/assets/";
+
 import styles from "./ProfileSiBar.module.scss";
 
 export const ProfileSideBar = ({ firstName, lastName, email }) => {
 	const navigate = useNavigate();
 	const location = useLocation();
-
+	const clearBasket = useProductStore(state => state.clearBasket);
 	const currentPath = location.pathname;
 	const isOrders = currentPath.includes("/profile/orders");
 	const isBasket = currentPath.includes("/profile/basket");
 
 	const logout = () => {
 		window.localStorage.removeItem("token");
+		clearBasket();
 		navigate("/");
 	};
 
@@ -53,7 +56,7 @@ export const ProfileSideBar = ({ firstName, lastName, email }) => {
 				</div>
 			</div>
 			<div className={styles.logout}>
-				<button onClick={logout}>Logout</button>
+				<button onClick={logout}>Вийти</button>
 			</div>
 		</div>
 	);

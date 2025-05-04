@@ -7,6 +7,7 @@ import {
 	filterPhones,
 	findAllProductsByCategory,
 	findProductById,
+	findProductsByName,
 } from "./product.service.js";
 
 const route = Router();
@@ -42,6 +43,19 @@ route.get("/by-id/:productId", async (req, res) => {
 		res
 			.status(500)
 			.json({ message: "Error get product by id", error: error.message });
+	}
+});
+
+route.get("/search", async (req, res) => {
+	try {
+		const { name } = req.query;
+		const products = await findProductsByName(name.trim());
+		res.status(200).json(products);
+	} catch (error) {
+		logger.error(error);
+		res
+			.status(500)
+			.json({ message: "Error get product by name", error: error.message });
 	}
 });
 

@@ -1,8 +1,10 @@
 import { Router } from "express";
+import mongoose from "mongoose";
 import { AuthCheck } from "../utils/auth-check.middleware.js";
 import { logger } from "../utils/logger.js";
 import {
 	addToBasket,
+	changeAmountProduct,
 	getBasket,
 	removeFromBasket,
 	syncBasket,
@@ -64,4 +66,20 @@ route.delete("/:productId", AuthCheck, async (req, res) => {
 	}
 });
 
+route.patch("/:productId", AuthCheck, async (req, res) => {
+	try {
+		const productId = new mongoose.Types.ObjectId(req.params.productId);
+		const userId = req._id;
+		const method = req.query.method;
+		await changeAmountProduct(userId, productId, method);
+
+		res.status(200).json({ success: true });
+	} catch (error) {
+		logger.error(error);
+		res.status(500).json({
+			message: `Error while changing product amount in basket (method: ${req.query.method})`,
+			error: error.message,
+		});
+	}
+});
 export const basketRouter = route;

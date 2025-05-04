@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { useProductStore } from "../../Api/store/store";
+import { useProductStore } from "../../zustand/store/store";
+
 import styles from "./Product.module.scss";
 
 export const Product = ({
