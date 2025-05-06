@@ -50,8 +50,6 @@ export const Header = () => {
 		}
 	};
 
-	console.log(searchResult);
-
 	const handleKeyDown = e => {
 		if (e.key === "Enter") {
 			handleSearch();

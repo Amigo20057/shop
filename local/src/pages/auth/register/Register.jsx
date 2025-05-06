@@ -25,11 +25,9 @@ export const Register = () => {
 			return response.data;
 		},
 		onSuccess: data => {
-			console.log("Register success", data);
 			window.location.href = "/profile/orders";
 		},
 		onError: error => {
-			console.log("Error register", error);
 			if (axios.isAxiosError(error)) {
 				const message =
 					error.response?.data?.message || "Серверна помилка при реєстрації";

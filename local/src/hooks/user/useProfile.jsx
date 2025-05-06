@@ -10,12 +10,12 @@ const getProfile = async token => {
 };
 
 export function useProfile(token) {
-	const { data, isLoading, status } = useQuery({
+	const { data, isLoading, status, error } = useQuery({
 		queryKey: ["user"],
 		queryFn: () => getProfile(token),
 		select: data => data.data,
 		enabled: !!token,
 	});
 
-	return { data, isLoading, status };
+	return { data, isLoading, status, error };
 }

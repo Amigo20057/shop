@@ -31,6 +31,9 @@ export const ProfileOrders = () => {
 					<p>
 						<b>Сума:</b> {order.totalPrice} ₴
 					</p>
+					<p>
+						<b>Статус:</b> {order.status}
+					</p>
 				</div>
 				<div className={styles.table}>
 					<div className={styles.header}>

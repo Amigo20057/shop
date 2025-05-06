@@ -40,8 +40,6 @@ export const Product = ({
 		}
 	};
 
-	console.log(productType);
-
 	const handleAddToBasket = () => {
 		if (amount <= 0) {
 			return;

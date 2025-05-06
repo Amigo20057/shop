@@ -50,11 +50,6 @@ mongoose
 		logger.error("DB ERROR", err);
 	});
 
-console.log(
-	"Serving phone pictures from:",
-	path.join(__dirname, "product", "phone-pictures")
-);
-
 app.listen(port, err => {
 	if (err) {
 		logger.error("Error: ", err);

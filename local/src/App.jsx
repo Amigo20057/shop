@@ -2,6 +2,7 @@ import React from "react";
 import { Route, Routes } from "react-router-dom";
 import { AdminHome } from "./admin/pages/adminHome/AdminHome";
 import { Login as AdminLogin } from "./admin/pages/auth/Login";
+import { Register as AdminRegister } from "./admin/pages/auth/Register";
 import { Header } from "./components";
 import {
 	FullProductTelephone,
@@ -44,6 +45,7 @@ export const App = () => {
 				<Route path='/auth/register' element={<Register />} />
 
 				<Route path='/admin/login' element={<AdminLogin />} />
+				<Route path='/admin/register' element={<AdminRegister />} />
 				<Route path='/admin/*' element={<AdminHome />} />
 
 				<Route path='*' element={<NotFound />} />

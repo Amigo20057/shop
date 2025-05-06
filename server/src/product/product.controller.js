@@ -1,8 +1,10 @@
 import { Router } from "express";
+import mongoose from "mongoose";
 import { AdminAuthCheck } from "../utils/admin-auth-check.middleware.js";
 import { logger } from "../utils/logger.js";
 import { uploadPhonesPictures } from "../utils/multer.js";
 import {
+	changeAmount,
 	createPhone,
 	filterPhones,
 	findAllProductsByCategory,
@@ -83,5 +85,23 @@ route.get("/phones/filters", async (req, res) => {
 			.json({ message: "Error get telephones", error: error.message });
 	}
 });
+
+route.patch(
+	"/phones/change-amount/:productId",
+	AdminAuthCheck,
+	async (req, res) => {
+		try {
+			const productId = new mongoose.Types.ObjectId(req.params.productId);
+			await changeAmount(productId, req.query.method);
+			res.status(200).json({ success: true });
+		} catch (error) {
+			logger.error(error);
+			res.status(500).json({
+				message: "Error change amount telephone",
+				error: error.message,
+			});
+		}
+	}
+);
 
 export const productRouter = route;

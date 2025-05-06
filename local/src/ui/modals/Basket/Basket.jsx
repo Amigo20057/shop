@@ -1,4 +1,5 @@
 import { useMutation } from "@tanstack/react-query";
+import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useProfile } from "../../../hooks/user/useProfile";
@@ -17,8 +18,6 @@ export const Basket = ({ isOpenBasket, setIsOpenBasket }) => {
 	const [order, setOrder] = useState([]);
 	const [email, setEmail] = useState("");
 
-	console.log(products);
-
 	const syncBasket = useMutation({
 		mutationFn: async values => {
 			await axios.post("http://localhost:4000/basket/sync-basket", values, {
@@ -27,9 +26,7 @@ export const Basket = ({ isOpenBasket, setIsOpenBasket }) => {
 				},
 			});
 		},
-		onSuccess: data => {
-			console.log("sync success", data);
-		},
+
 		onError: error => {
 			console.error("Error sync basket", error);
 			if (axios.isAxiosError(error)) {
@@ -94,7 +91,6 @@ export const Basket = ({ isOpenBasket, setIsOpenBasket }) => {
 			setIsOpenBasket(false);
 			clearBasket();
 		} catch (err) {
-			console.log(err);
 			alert("Помилка при створенні замовлення");
 			setIsOpenBasket(false);
 			clearBasket();

@@ -13,7 +13,6 @@ export const Order = () => {
 	const clearBasket = useProductStore(state => state.clearBasket);
 	const token = window.localStorage.getItem("token");
 	const { data: basketData } = useBasket();
-	console.log(basketData);
 	const {
 		register,
 		handleSubmit,
@@ -67,7 +66,6 @@ export const Order = () => {
 	});
 
 	const onSubmit = values => {
-		console.log(values);
 		createOrderMutation.mutate(values);
 	};
 

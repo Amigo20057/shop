@@ -1,18 +1,25 @@
-import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import axios from "axios";
-import { useBasket } from "../../hooks/basket/useBasket";
-import styles from "./Profile.module.scss";
+import { SideBar } from "../../components/sideBar/SideBar";
+import styles from "./Telephones.module.scss";
 
-export const ProfileBasket = () => {
-	const { data, isSuccess, status } = useBasket();
-
-	const token = window.localStorage.getItem("token");
+export const Telephones = () => {
 	const queryClient = useQueryClient();
+	const token = window.localStorage.getItem("token");
+	const { data, isLoading } = useQuery({
+		queryKey: ["telephones"],
+		queryFn: async () => {
+			const response = await axios.get("http://localhost:4000/products/phones");
+			return response;
+		},
+		select: data => data.data,
+		enabled: !!token,
+	});
 
 	const incrementAmountMutation = useMutation({
 		mutationFn: async productId => {
 			const response = await axios.patch(
-				`http://localhost:4000/basket/${productId}?method=inc`,
+				`http://localhost:4000/products/phones/change-amount/${productId}?method=inc`,
 				{},
 				{
 					headers: {
@@ -23,7 +30,7 @@ export const ProfileBasket = () => {
 			return response.data;
 		},
 		onSuccess: () => {
-			queryClient.invalidateQueries(["basket"]);
+			queryClient.invalidateQueries(["telephones"]);
 		},
 		onError: error => {
 			console.error("Error increment amount", error);
@@ -41,7 +48,7 @@ export const ProfileBasket = () => {
 	const decrementAmountMutation = useMutation({
 		mutationFn: async productId => {
 			const response = await axios.patch(
-				`http://localhost:4000/basket/${productId}?method=dec`,
+				`http://localhost:4000/products/phones/change-amount/${productId}?method=dec`,
 				{},
 				{
 					headers: {
@@ -52,7 +59,7 @@ export const ProfileBasket = () => {
 			return response.data;
 		},
 		onSuccess: () => {
-			queryClient.invalidateQueries(["basket"]);
+			queryClient.invalidateQueries(["telephones"]);
 		},
 		onError: error => {
 			console.error("Error decrement amount", error);
@@ -75,21 +82,7 @@ export const ProfileBasket = () => {
 		decrementAmountMutation.mutate(productId);
 	};
 
-	if (!data || !isSuccess || status === "error" || data.length === 0) {
-		return (
-			<div
-				style={{
-					marginTop: "50px",
-					marginLeft: "50px",
-					fontSize: "24px",
-				}}
-			>
-				Кошик порожній....
-			</div>
-		);
-	}
-
-	const renderBasketProduct = () => {
+	const renderTelephones = () => {
 		return data.map((product, index) => (
 			<div className={styles.row} key={index}>
 				<div className={styles.cell}>
@@ -102,24 +95,33 @@ export const ProfileBasket = () => {
 				<div className={styles.cell}>{product.amount}</div>
 				<div className={styles.cell}>{product.price} ₴</div>
 				<div className={styles.cell}>
-					<button onClick={() => incrementProduct(product.id)}>+</button>
-					<button onClick={() => decrementProduct(product.id)}>-</button>
+					<button onClick={() => incrementProduct(product._id)}>+</button>
+					<button onClick={() => decrementProduct(product._id)}>-</button>
 				</div>
 			</div>
 		));
 	};
 
 	return (
-		<div className={styles.profileBasket}>
-			<div className={styles.table}>
-				<div className={styles.header}>
-					<div className={styles.cell}>Картинка</div>
-					<div className={styles.cell}>Назва</div>
-					<div className={styles.cell}>Кількість</div>
-					<div className={styles.cell}>Ціна</div>
-					<div className={styles.cell}>Змінити кількість</div>
-				</div>
-				{renderBasketProduct()}
+		<div className={styles.adminLayout}>
+			<SideBar />
+			<div className={styles.content}>
+				{isLoading ? (
+					<>...loading</>
+				) : !data || data.length === 0 ? (
+					<p>Немає телефонів</p>
+				) : (
+					<div className={styles.table}>
+						<div className={styles.header}>
+							<div className={styles.cell}>Картинка</div>
+							<div className={styles.cell}>Назва</div>
+							<div className={styles.cell}>Кількість</div>
+							<div className={styles.cell}>Ціна</div>
+							<div className={styles.cell}>Змінити кількість</div>
+						</div>
+						{renderTelephones()}
+					</div>
+				)}
 			</div>
 		</div>
 	);

@@ -59,3 +59,19 @@ export async function findProductsByName(name) {
 		name: { $regex: name, $options: "i" },
 	});
 }
+
+export async function changeAmount(productId, method) {
+	const product = await Product.findById(productId);
+	if (!product) return;
+
+	let newAmount = product.amount;
+
+	if (method === "inc") {
+		newAmount += 1;
+	} else if (method === "dec") {
+		newAmount -= 1;
+		if (newAmount < 0) return;
+	}
+
+	await Product.updateOne({ _id: productId }, { amount: newAmount });
+}

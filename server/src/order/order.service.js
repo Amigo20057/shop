@@ -1,6 +1,7 @@
 import mongoose from "mongoose";
 import { clearBasket } from "../basket/basket.service.js";
 import Product from "../product/model/product.model.js";
+import { findUserById } from "../user/user.service.js";
 import Order from "./model/order.model.js";
 
 export async function createOrder(userId, orderData) {
@@ -17,8 +18,6 @@ export async function createOrder(userId, orderData) {
 		telephoneNumber: orderData.telephoneNumber,
 		totalPrice: orderData.totalPrice,
 	});
-
-	console.log(order);
 
 	for (const item of orderData.items) {
 		if (!mongoose.Types.ObjectId.isValid(item.productId)) {
@@ -69,6 +68,7 @@ export async function getOrders(userId) {
 		telephoneNumber: order.telephoneNumber,
 		totalPrice: order.totalPrice,
 		createdAt: order.createdAt,
+		status: order.status,
 		items: order.items.map(item => {
 			const product = item.productId;
 			return {
@@ -82,4 +82,47 @@ export async function getOrders(userId) {
 	}));
 
 	return result;
+}
+
+export async function getOrdersForAdmin(userId) {
+	const user = await findUserById(userId);
+	if (user.role !== "ADMIN") {
+		throw new Error("User not admin");
+	}
+
+	const orders = await Order.find({ status: "PENDING" }).populate(
+		"items.productId"
+	);
+
+	const result = orders.map(order => ({
+		id: order._id,
+		email: order.email,
+		fullName: order.fullName,
+		address: order.address,
+		telephoneNumber: order.telephoneNumber,
+		totalPrice: order.totalPrice,
+		createdAt: order.createdAt,
+		status: order.status,
+		items: order.items.map(item => {
+			const product = item.productId;
+			return {
+				id: product._id,
+				name: product.name,
+				picture: product.picture,
+				price: product.price,
+				amount: item.amount,
+			};
+		}),
+	}));
+
+	return result;
+}
+
+export async function completeOrder(orderId, newStatus) {
+	const allowedStatuses = ["PENDING", "PROCESSED", "REJECTION"];
+	if (!allowedStatuses.includes(newStatus)) {
+		throw new Error("Invalid status");
+	}
+
+	await Order.findByIdAndUpdate(orderId, { status: newStatus });
 }

@@ -19,7 +19,7 @@ async function findUserByEmail(email) {
 	return await UserModel.findOne({ email: email });
 }
 
-async function findUserById(id) {
+export async function findUserById(id) {
 	return await UserModel.findById(id);
 }
 

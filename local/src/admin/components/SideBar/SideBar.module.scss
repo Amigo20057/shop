@@ -1,0 +1,32 @@
+.adminSideBar {
+	position: fixed;
+	height: 100vh;
+	left: 0;
+	width: 250px;
+	background-color: #1f2937;
+	color: #fff;
+	padding: 20px;
+	display: flex;
+	flex-direction: column;
+	gap: 20px;
+}
+
+.adminSideBar a {
+	text-decoration: none;
+}
+
+.adminSideBar button {
+	background: none;
+	border: none;
+	color: white;
+	text-align: left;
+	font-size: 18px;
+	padding: 10px 15px;
+	border-radius: 8px;
+	transition: background 0.2s;
+	cursor: pointer;
+}
+
+.adminSideBar button:hover {
+	background-color: #374151;
+}
