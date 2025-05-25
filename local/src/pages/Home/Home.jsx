@@ -1,17 +1,8 @@
-import React from "react";
 import { useNavigate } from "react-router-dom";
 import { ClipLoader } from "react-spinners";
 import { Product } from "../../components/product/Product";
 import { usePhones } from "../../hooks/products/phones/usePhones";
-import {
-	banner,
-	musicColumn,
-	notebook,
-	pc,
-	tablet,
-	telephone,
-	tv,
-} from "./assets";
+import { banner } from "./assets";
 import styles from "./Home.module.scss";
 
 export const Home = () => {
@@ -51,7 +42,7 @@ export const Home = () => {
 				</div>
 				<img src={banner} alt='banner' loading='lazy' />
 			</div>
-			<div className={styles.catalog}>
+			{/* <div className={styles.catalog}>
 				<h1>Каталог</h1>
 				<div
 					className={styles.active}
@@ -85,11 +76,17 @@ export const Home = () => {
 					<h2>Колонки</h2>
 					<div className={styles.close}></div>
 				</div>
-			</div>
-			<div className={styles.products}>
+			</div> */}
+			<div className={styles.productsHeader}>
 				<h1>Популярні Смартфони</h1>
-				{renderTelephones()}
+				<span
+					className={styles.allPhones}
+					onClick={() => navigate("/product/telephones")}
+				>
+					Усі телефони →
+				</span>
 			</div>
+			<div className={styles.products}>{renderTelephones()}</div>
 		</div>
 	);
 };

@@ -99,6 +99,7 @@
 		align-items: end;
 
 		> h1 {
+			cursor: pointer;
 			position: absolute;
 			font-size: 32px;
 			width: 100%;
@@ -176,4 +177,30 @@
 	justify-content: center;
 	align-items: center;
 	height: 100vh;
+}
+.productsHeader {
+	width: 90%;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	padding-bottom: 28px;
+	border-bottom: 2px solid #bcc5ff94;
+
+	h1 {
+		font-size: 32px;
+		font-weight: 300;
+		cursor: default;
+	}
+
+	.allPhones {
+		font-size: 16px;
+		font-weight: 400;
+		color: #091d9e;
+		cursor: pointer;
+		transition: color 0.2s;
+
+		&:hover {
+			color: #3947a2;
+		}
+	}
 }

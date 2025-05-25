@@ -1,11 +1,12 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 import { useBasket } from "../../hooks/basket/useBasket";
 import styles from "./Profile.module.scss";
 
 export const ProfileBasket = () => {
 	const { data, isSuccess, status } = useBasket();
-
+	const navigate = useNavigate();
 	const token = window.localStorage.getItem("token");
 	const queryClient = useQueryClient();
 
@@ -120,6 +121,23 @@ export const ProfileBasket = () => {
 					<div className={styles.cell}>Змінити кількість</div>
 				</div>
 				{renderBasketProduct()}
+				<button
+					style={{
+						width: "10%",
+						height: "30px",
+						margin: "0 auto",
+						marginTop: "50px",
+						backgroundColor: "#3947a2",
+						border: "none",
+						color: "#fff",
+						borderRadius: "8px",
+					}}
+					onClick={() => {
+						navigate("/create-order");
+					}}
+				>
+					Замовити
+				</button>
 			</div>
 		</div>
 	);
