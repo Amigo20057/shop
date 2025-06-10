@@ -12,7 +12,7 @@ export const Home = () => {
 	if (isLoading) {
 		return (
 			<div className={styles.loadingContainer}>
-				<ClipLoader color='#95a3fa' loading={isLoading} size={30} />
+				<ClipLoader color="#95a3fa" loading={isLoading} size={30} />
 			</div>
 		);
 	}
@@ -40,43 +40,8 @@ export const Home = () => {
 					<h2>ЗНИЖКА 30%</h2>
 					<h3>при покупці другого товару</h3>
 				</div>
-				<img src={banner} alt='banner' loading='lazy' />
+				<img src={banner} alt="banner" loading="lazy" />
 			</div>
-			{/* <div className={styles.catalog}>
-				<h1>Каталог</h1>
-				<div
-					className={styles.active}
-					onClick={() => navigate("/product/telephones")}
-				>
-					<img src={telephone} alt='telephone' />
-					<h2>Смартфони</h2>
-				</div>
-				<div style={{ cursor: "no-drop" }}>
-					<img src={notebook} alt='notebook' />
-					<h2>Ноутбуки</h2>
-					<div className={styles.close}></div>
-				</div>
-				<div style={{ cursor: "no-drop" }}>
-					<img src={pc} alt='computer' />
-					<h2>Комп'ютери</h2>
-					<div className={styles.close}></div>
-				</div>
-				<div style={{ cursor: "no-drop" }}>
-					<img src={tv} alt='tv' />
-					<h2>Телевізори</h2>
-					<div className={styles.close}></div>
-				</div>
-				<div style={{ cursor: "no-drop" }}>
-					<img src={tablet} alt='tablet' />
-					<h2>Планшети</h2>
-					<div className={styles.close}></div>
-				</div>
-				<div style={{ cursor: "no-drop" }}>
-					<img src={musicColumn} alt='music column' />
-					<h2>Колонки</h2>
-					<div className={styles.close}></div>
-				</div>
-			</div> */}
 			<div className={styles.productsHeader}>
 				<h1>Популярні Смартфони</h1>
 				<span
